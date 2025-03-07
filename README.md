@@ -23,6 +23,12 @@ This repository contains Ansible playbook to automatically configure WSL2 instan
 > This playbook is fully configurable. <br>
 > You can skip or reconfigure any task for your needs. See [Usage](#Usage) for more information.
 
+- Configure WSL2 instance in `/etc/wsl.conf`.
+- Install [Homebrew](https://brew.sh/) and Homebrew packages.
+- Install [VS Code](https://code.visualstudio.com/) extensions. (if you have VS Code on your Windows machine)
+- Configure [Docker Engine](https://docs.docker.com/engine/). (if not using [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+- Add your `dotfiles` repository and create symlinks.
+
 ## Supported Platforms
 
 The following WSL2 images are currently supported (**tested**):
@@ -89,7 +95,6 @@ Supposed that you are setting on **CentOS WSL2** machine:
 installed_packages:
   - epel-release
   - dnf-plugins-core
-  - redhat-lsb-core
   - wget
   - unzip
 
@@ -154,6 +159,7 @@ This can easily be done by setting **`configure_docker`** to **`true`** in your 
 This project was heavily inspired by [geerlingguy/mac-dev-playbook](https://github.com/geerlingguy/mac-dev-playbook)
 
 Other references/sources:
+
 - [geerlingguy.mac](https://github.com/geerlingguy/ansible-collection-mac)
 - [geerlingguy.dotfiles](https://github.com/geerlingguy/ansible-role-dotfiles)
 - [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker)
