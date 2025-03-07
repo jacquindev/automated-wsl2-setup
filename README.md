@@ -87,11 +87,11 @@ Supposed that you are setting on **CentOS WSL2** machine:
 ```yaml
 # Packages to install via dnf:
 installed_packages:
-	- epel-release
-	- dnf-plugins-core
-	- redhat-lsb-core
-	- wget
-	- unzip
+  - epel-release
+  - dnf-plugins-core
+  - redhat-lsb-core
+  - wget
+  - unzip
 
 # wsl.conf settings
 wsl_boot_command: service docker start
@@ -107,13 +107,13 @@ configure_homebrew: false
 # To exclude the installations by homebrew using Brewfile:
 homebrew_use_brewfile: false
 homebrew_taps:
-	- hashicorp/tap
+  - hashicorp/tap
 homebrew_packages:
-	- eza
-	- gh
-	- git-extras
-	- hashicorp/tap/terraform
-	- hashicorp/tap/vagrant
+  - eza
+  - gh
+  - git-extras
+  - hashicorp/tap/terraform
+  - hashicorp/tap/vagrant
 
 # To NOT configure your machine with dotfiles:
 configure_dotfiles: false
