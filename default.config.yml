@@ -8,9 +8,9 @@ configure_vscode: true
 installed_packages:
   - binutils
   - coreutils
-  - fish
+  - curl
+  - gawk
   - gnupg2
-  - lsb-release
   - unzip
   - wget
   - zsh

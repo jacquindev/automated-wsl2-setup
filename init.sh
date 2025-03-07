@@ -44,4 +44,7 @@ centos)
 	python3 -m pip install --upgrade pip
 	python3 -m pip install --user ansible ansible-lint
 	;;
+arch)
+	sudo pacman -Syu --noconfirm ansible
+	;;
 esac
