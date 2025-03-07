@@ -36,6 +36,13 @@ wsl_automount_root: /mnt/
 wsl_automount_options: "metadata,umask=77,fmask=11"
 ```
 
+By default, this role will create XDG directories if not found, and add XDG variables into `.bashrc` file in your `$HOME` directory.
+To NOT let `Ansible` configure your `.bashrc` with XDG variables, set:
+
+```yaml
+xdg_init_shell: false
+```
+
 Dependencies
 ------------
 
