@@ -34,7 +34,8 @@ The following WSL2 images are currently supported (**tested**):
 - **Debian 12** (Bookworm)
 - **CentOS 9 Stream**
 
-I have not tested for other WSL2 instances ye
+Other Linux images for WSL2 have not been tested yet.
+Futher updates will available soon...
 
 ## Installation
 
