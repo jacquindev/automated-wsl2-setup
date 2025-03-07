@@ -26,3 +26,50 @@
     state: absent
   become: true
   when: disabled_packages | length > 0
+
+- name: Ensure wslu is installed (Ubuntu)
+  when: ansible_distribution == 'Ubuntu'
+  become: true
+  block:
+    - name: Add wslu apt repository
+      ansible.builtin.apt_repository:
+        repo: ppa:wslutilities/wslu
+        state: present
+        update_cache: true
+
+    - name: Install wslu using apt
+      ansible.builtin.apt:
+        name: wslu
+        state: present
+        update_cache: true
+
+- name: Ensure wslu is installed (Debian)
+  when: ansible_distribution == 'Debian'
+  become: true
+  block:
+    - name: Ensure prerequisites packages
+      ansible.builtin.apt:
+        pkg:
+          - gnupg2
+          - apt-transport-https
+        state: present
+        force_apt_get: true
+
+    - name: Add wslu apt repository key
+      ansible.builtin.get_url:
+        url: https://pkg.wslutiliti.es/public.key
+        dest: /usr/share/keyrings/wslu-archive-keyring.pgp
+        force: true
+        mode: "0644"
+
+    - name: Add wslu apt repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/wslu-archive-keyring.pgp] https://pkg.wslutiliti.es/debian {{ ansible_distribution_release }} main"
+        filename: wslu
+        state: present
+
+    - name: Install wslu via apt
+      ansible.builtin.apt:
+        name: wslu
+        state: present
+        update_cache: true

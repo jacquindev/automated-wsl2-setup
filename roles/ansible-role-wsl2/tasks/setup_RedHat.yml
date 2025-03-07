@@ -35,3 +35,70 @@
     state: absent
   become: true
   when: disabled_packages | length > 0
+
+- name: Ensure pre-requisites packages
+  ansible.builtin.dnf:
+    name:
+      - epel-release
+      - dnf-plugins-core
+    state: present
+  become: true
+  when: ansible_distribution_major_version >= "8"
+
+- name: Set powertool repo file fact
+  ansible.builtin.set_fact:
+    powertools_repo_file: "{{ ansible_distribution }}-{{ ansible_distribution_release }}-PowerTools.repo"
+
+- name: Enable PowerTools
+  community.general.ini_file:
+    path: "/etc/yum.repos.d/{{ powertools_repo_file }}"
+    section: powertools
+    option: enabled
+    value: "1"
+    mode: "0644"
+  become: true
+  when: ansible_distribution_major_version >= "8"
+
+- name: Update cache
+  ansible.builtin.dnf:
+    update_cache: true
+  become: true
+
+- name: Ensure wslu is installed (RedHat >= 8)
+  become: true
+  when: ansible_distribution_major_version >= "8"
+  block:
+    - name: Enable wslutilities copr repository
+      community.general.copr:
+        name: wslutilities/wslu
+        state: enabled
+
+    - name: Install wslu
+      ansible.builtin.dnf:
+        name: wslu
+        state: present
+
+- name: Ensure wslu is installed (RedHat <= 7)
+  become: true
+  when: ansible_distribution_major_version <= "7"
+  block:
+    - name: Add wslutilities repository for CentOS 7
+      ansible.builtin.yum_repository:
+        name: wslutilities
+        baseurl: https://download.opensuse.org/repositories/home:/wslutilities/CentOS_7/home:wslutilities.repo
+        enabled: true
+        state: present
+      when: ansible_distribution == 'CentOS'
+
+    - name: Add wslutilities repository for RHEL 7
+      ansible.builtin.yum_repository:
+        name: wslutilities
+        baseurl: https://download.opensuse.org/repositories/home:/wslutilities/RHEL_7/home:wslutilities.repo
+        enabled: true
+        state: present
+      when: ansible_distribution != 'CentOS'
+
+    - name: Install wslu package
+      ansible.builtin.dnf:
+        name: wslu
+        state: present

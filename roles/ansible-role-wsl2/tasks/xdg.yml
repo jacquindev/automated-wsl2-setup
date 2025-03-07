@@ -8,3 +8,15 @@
     group: "{{ ansible_user_id }}"
     mode: u+rwx
   loop: "{{ xdg_skeleton_paths }}"
+
+- name: Add XDG directories into .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    block: "{{ xdg_config_block }}"
+    marker: "### {mark} XDG CONFIGURATION BLOCK"
+    create: true
+    mode: u+rwx
+    append_newline: true
+    prepend_newline: true
+    state: present
+  when: xdg_init_shell

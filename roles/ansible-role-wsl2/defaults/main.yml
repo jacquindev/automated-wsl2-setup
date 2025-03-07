@@ -29,6 +29,8 @@ xdg_bin_home: "{{ ansible_user_dir }}/.local/bin"
 xdg_runtime_dir: "{{ ansible_user_dir }}/.xdg"
 xdg_projects_dir: "{{ ansible_user_dir }}/projects"
 
+xdg_init_shell: true
+
 xdg_skeleton_paths:
   - "{{ xdg_config_home }}"
   - "{{ xdg_cache_home }}"
@@ -37,3 +39,12 @@ xdg_skeleton_paths:
   - "{{ xdg_bin_home }}"
   - "{{ xdg_runtime_dir }}"
   - "{{ xdg_projects_dir }}"
+
+xdg_config_block: |
+  export XDG_CONFIG_HOME="{{ xdg_config_home }}"
+  export XDG_CACHE_HOME="{{ xdg_cache_home }}"
+  export XDG_DATA_HOME="{{ xdg_data_home }}"
+  export XDG_STATE_HOME="{{ xdg_state_home }}"
+  export XDG_BIN_HOME="{{ xdg_bin_home }}"
+  export XDG_RUNTIME_DIR="{{ xdg_runtime_dir }}"
+  export XDG_PROJECTS_DIR="{{ xdg_projects_dir }}"
