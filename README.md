@@ -124,6 +124,26 @@ dotfiles_repo: https://github.com/<your_git_name>/<your_git_repo_name>.git
 dotfiles_repo_version: master
 ```
 
+To install / uninstall [Visual Studio Code](https://code.visualstudio.com/) extensions for your WSL, please setup the following settings:
+
+Please note that this supposed you already installed [VS Code](https://code.visualstudio.com/) on your Windows local machine and have [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension installed.
+
+Ensure that in your `[interop]` section of `wsl.conf` file, `enabled=true` and `appendWindowsPath=true`.
+
+For more information, please check out this link -> **[ansible-role-vscode](./roles/ansible-role-vscode/README.md)**.
+
+```yaml
+configure_vscode: true
+
+vscode_extensions_install:
+  - redhat.ansible
+  - redhat.vscode-yaml
+  - tamasfe.even-better-toml
+
+vscode_extensions_uninstall:
+  - ms-azuretools.vscode-docker
+```
+
 In some cases, you might not want to use *[Docker Desktop](https://www.docker.com/products/docker-desktop/)* on your Windows machine, you should install `Docker` on your WSL2 instance.
 
 This can easily be done by setting **`configure_docker`** to **`true`** in your `config.yml` file.
