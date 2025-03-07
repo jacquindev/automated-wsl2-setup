@@ -21,6 +21,10 @@
       when: configure_homebrew
       tags: ["homebrew"]
 
+    - role: ansible-role-vscode
+      when: configure_vscode
+      tags: ["vscode", "code"]
+
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
       tags: ["dotfiles"]

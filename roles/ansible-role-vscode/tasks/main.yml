@@ -1,0 +1,20 @@
+---
+# tasks file for ansible-role-vscode
+
+- name: Install VSCode Extensions for WSL
+  ansible.builtin.command: "code --install-extension {{ item }}"
+  register: vscode_install_ext
+  changed_when:
+    - vscode_install_ext.rc == 0
+    - '"already installed" not in vscode_install_ext.stdout'
+  loop: "{{ vscode_extensions_install }}"
+  when: vscode_extensions_install | length > 0
+
+- name: Install VSCode Extensions for WSL
+  ansible.builtin.command: "code --install-extension {{ item }}"
+  register: vscode_uninstall_ext
+  changed_when:
+    - vscode_uninstall_ext.rc == 0
+    - '"not installed" not in vscode_uninstall_ext.stdout'
+  loop: "{{ vscode_extensions_uninstall }}"
+  when: vscode_extensions_uninstall | length > 0

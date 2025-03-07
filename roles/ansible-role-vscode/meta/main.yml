@@ -1,0 +1,14 @@
+galaxy_info:
+  author: Jacquin Moon
+  description: A simple role to install/uninstall VSCode extensions for a WSL instance.
+  license: MIT
+
+  min_ansible_version: "2.1"
+
+  galaxy_tags:
+    - wsl
+    - wsl2
+    - vscode
+    - code
+
+dependencies: []

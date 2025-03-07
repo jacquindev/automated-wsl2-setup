@@ -1,0 +1,4 @@
+---
+# vars file for ansible-role-vscode
+
+vscode_executable: "/mnt/c/Users/{{ windows_username }}/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"

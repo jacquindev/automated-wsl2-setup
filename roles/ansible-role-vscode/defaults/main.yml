@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-role-vscode
+
+vscode_extensions_install: []
+
+vscode_extensions_uninstall: []
