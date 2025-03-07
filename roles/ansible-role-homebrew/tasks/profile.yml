@@ -1,37 +1,16 @@
 ---
 
-- name: Set shell config file fact
-  ansible.builtin.set_fact:
-    shell_config_file: >
-      {% if homebrew_profile == 'bash' %}
-      {{ bash_config_file }}
-      {% elif homebrew_profile == 'zsh' %}
-      {{ zsh_config_file }}
-      {% elif homebrew_profile == 'fish' %}
-      {{ fish_config_file }}
-      {% endif %}
-
 - name: Setup homebrew_block fact
   ansible.builtin.set_fact:
-    homebrew_block: >
-      {% if homebrew_profile == 'bash' %}
-      {{ homebrew_bash_block }}
-      {% elif homebrew_profile == 'zsh' %}
-      {{ homebrew_bash_block }}
-      {% elif homebrew_profile == 'fish' %}
-      {{ homebrew_fish_block }}
-      {% endif %}
+    homebrew_block: "{{ homebrew_fish_block if homebrew_profile == 'fish' else homebrew_bash_block }}"
 
 - name: Set homebrew_completion_block fact
   ansible.builtin.set_fact:
-    homebrew_completion_block: >
-      {% if homebrew_profile == 'bash' %}
-      {{ homebrew_bash_completion }}
-      {% elif homebrew_profile == 'zsh' %}
-      {{ homebrew_zsh_completion }}
-      {% elif homebrew_profile == 'fish' %}
-      {{ homebrew_fish_completion }}
-      {% endif %}
+    homebrew_completion_block: "{{ homebrew_bash_completion if homebrew_profile == 'bash' else homebrew_zsh_completion if homebrew_profile == 'zsh' else homebrew_fish_completion }}"
+
+- name: Set shell config file fact
+  ansible.builtin.set_fact:
+    shell_config_file: "{{ bash_config_file if homebrew_profile == 'bash' else zsh_config_file if homebrew_profile == 'zsh' else fish_config_file }}"
 
 - name: Add Homebrew shell integration
   ansible.builtin.blockinfile:
@@ -39,9 +18,10 @@
     block: "{{ homebrew_block }}"
     marker: "### {mark} HOMEBREW SHELL INTEGRATION BLOCK"
     mode: u+rwx
+    prepend_newline: true
+    append_newline: false
     state: present
     create: true
-    prepend_newline: true
 
 - name: Add Homebrew auto-completion
   ansible.builtin.blockinfile:
@@ -49,7 +29,9 @@
     block: "{{ homebrew_completion_block }}"
     marker: "### {mark} HOMEBREW AUTO-COMPLETION BLOCK"
     mode: u+rwx
-    state: present
     create: true
     prepend_newline: true
+    append_newline: false
+    state: present
+    create: true
   when: homebrew_autocompletion
