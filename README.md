@@ -33,7 +33,8 @@ The following WSL2 images are currently supported (**tested**):
 - **CentOS 9 Stream**
 
 Other Linux images for WSL2 have not been tested yet.
-Futher updates will available soon...
+
+Any futher updates and improvements will be available soon.
 
 ## Installation
 
