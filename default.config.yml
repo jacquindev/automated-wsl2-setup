@@ -3,6 +3,7 @@
 configure_docker: false
 configure_dotfiles: true
 configure_homebrew: true
+configure_vscode: true
 
 installed_packages:
   - fish
@@ -23,6 +24,33 @@ dotfiles_repo_version: master
 dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/projects/dotfiles
 dotfiles_home: "~"
+
 dotfiles_files:
   - .zshenv
   - .config
+
+vscode_extensions_install:
+  - christian-kohler.path-intellisense
+  - davidanson.vscode-markdownlint
+  - dbaeumer.vscode-eslint
+  - donjayamanne.githistory
+  - dotjoshjohnson.xml
+  - eamodio.gitlens
+  - editorconfig.editorconfig
+  - foxundermoon.shell-format
+  - github.copilot
+  - github.copilot-chat
+  - github.vscode-github-actions
+  - github.vscode-pull-request-github
+  - mechatroner.rainbow-csv
+  - ms-azuretools.vscode-docker
+  - ms-python.debugpy
+  - ms-python.python
+  - ms-python.vscode-pylance
+  - naumovs.color-highlight
+  - oderwat.indent-rainbow
+  - redhat.ansible
+  - redhat.vscode-xml
+  - redhat.vscode-yaml
+  - tamasfe.even-better-toml
+  - timonwong.shellcheck
