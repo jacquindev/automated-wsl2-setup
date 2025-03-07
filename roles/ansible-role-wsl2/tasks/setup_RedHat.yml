@@ -43,10 +43,9 @@
         update_cache: true
 
     - name: Enable crb repository
-      ansible.builtin.yum_repository:
+      community.general.dnf_config_manager:
         name: crb
-        state: present
-        enabled: true
+        state: enabled
 
     - name: Update cache
       ansible.builtin.dnf:
