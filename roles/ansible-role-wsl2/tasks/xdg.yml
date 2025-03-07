@@ -16,7 +16,5 @@
     marker: "### {mark} XDG CONFIGURATION BLOCK"
     create: true
     mode: u+rwx
-    append_newline: true
-    prepend_newline: true
     state: present
   when: xdg_init_shell
