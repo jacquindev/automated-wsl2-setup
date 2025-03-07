@@ -44,7 +44,7 @@
 
     - name: Enable crb repository
       ansible.builtin.yum_repository:
-        repo: crb
+        name: crb
         state: present
         enabled: true
 
