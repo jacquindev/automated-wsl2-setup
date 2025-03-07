@@ -1,0 +1,25 @@
+[boot]
+systemd = {{ wsl_boot_systemd }}
+{% if wsl_boot_command | length > 0 %}
+command = {{ wsl_boot_command }}
+{% endif %}
+
+[user]
+default = {{ wsl_username }}
+
+[network]
+{% if wsl_hostname | length > 0 %}
+hostname = {{ wsl_hostname }}
+{% endif %}
+generateHosts = {{ wsl_network_generate_hosts }}
+generateResolvConf = {{ wsl_network_generate_resolve_config }}
+
+[interop]
+enabled = {{ wsl_interop_enabled }}
+appendWindowsPath = {{ wsl_interop_append_windows_path }}
+
+[automount]
+enabled = {{ wsl_automount_enabled }}
+mountFsTab = {{ wsl_automount_fstab }}
+root = {{ wsl_automount_root }}
+options = "{{ wsl_automount_options }}"

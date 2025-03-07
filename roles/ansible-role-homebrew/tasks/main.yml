@@ -1,0 +1,12 @@
+---
+# tasks file for ansible-role-homebrew
+
+- name: Ensure Homebrew is installed
+  ansible.builtin.include_tasks: install.yml
+
+- name: Add Homebrew integration for shell profile
+  ansible.builtin.include_tasks: profile.yml
+  when: homebrew_init_shell
+
+- name: Ensure Homebrew packages
+  ansible.builtin.include_tasks: packages.yml

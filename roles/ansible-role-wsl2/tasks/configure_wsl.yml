@@ -1,0 +1,10 @@
+---
+
+- name: Configure WSL using template
+  ansible.builtin.template:
+    src: wsl.conf.j2
+    dest: /etc/wsl.conf
+    mode: "0644"
+    owner: root
+    group: root
+  become: true

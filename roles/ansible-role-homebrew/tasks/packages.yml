@@ -1,0 +1,51 @@
+---
+
+- name: Tap Homebrew repositories
+  community.general.homebrew_tap:
+    name: "{{ item.name | default(item) }}"
+    path: "{{ item.path | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+    url: "{{ item.url | default(omit) }}"
+  with_items: "{{ homebrew_taps }}"
+  when: homebrew_taps | length > 0
+
+- name: Install Homebrew packages
+  community.general.homebrew:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+    path: "{{ item.path | default(omit) }}"
+  with_items: "{{ homebrew_packages }}"
+  when: homebrew_packages | length > 0
+
+- name: Disable/Uninstall Homebrew packages
+  community.general.homebrew:
+    name: "{{ item.name | default(item) }}"
+    state: absent
+  with_items: "{{ homebrew_blacklist }}"
+  when: homebrew_blacklist | length > 0
+
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+    upgrade_all: true
+  when: homebrew_update
+
+- name: Install packages from a Brewfile
+  when: homebrew_use_brewfile
+  block:
+    - name: Check if Brewfile exists
+      ansible.builtin.stat:
+        path: "{{ homebrew_brewfile_file }}"
+      register: brewfile_check
+
+    - name: Install packages from Brewfile
+      ansible.builtin.command: "{{ homebrew_executable }} bundle"
+      args:
+        chdir: "{{ homebrew_brewfile_dir }}"
+      register: brewfile_bundle
+      check_mode: false
+      changed_when: brewfile_bundle.rc != 0
+
+    - name: Print result
+      ansible.builtin.debug:
+        var: brewfile_bundle.stdout_lines

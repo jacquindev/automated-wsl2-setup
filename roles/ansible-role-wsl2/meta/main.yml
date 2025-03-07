@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Jacquin Moon
+  description: Basic setup for WSL2 machine
+  license: MIT
+
+  min_ansible_version: "2.1"
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  galaxy_tags:
+    - wsl
+    - wsl2
+
+dependencies: []

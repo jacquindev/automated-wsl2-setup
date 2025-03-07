@@ -1,0 +1,42 @@
+---
+
+- name: Ensure Homebrew dependencies (generic)
+  ansible.builtin.package:
+    name:
+      - curl
+      - file
+      - git
+    state: present
+  become: true
+
+- name: Ensure Homebrew dependencies (Debian)
+  ansible.builtin.apt:
+    pkg:
+      - build-essential
+      - procps
+    state: present
+  become: true
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure Homebrew dependencies (RedHat)
+  ansible.builtin.dnf:
+    name:
+      - "@Development Tools"
+      - procps-ng
+    state: present
+  become: true
+  when: ansible_os_family == 'RedHat'
+
+- name: Check if Homebrew is installed
+  ansible.builtin.stat:
+    path: "{{ homebrew_executable }}"
+  register: homebrew_check
+
+- name: Install Homebrew using remote script if not exists
+  ansible.builtin.shell:
+    cmd: NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL {{ homebrew_install_script }})"
+  changed_when: false
+  check_mode: false
+  register: homebrew_install
+  until: homebrew_install is succeeded
+  when: not homebrew_check.stat.exists

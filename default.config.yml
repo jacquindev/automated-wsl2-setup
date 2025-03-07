@@ -1,0 +1,26 @@
+---
+
+configure_homebrew: true
+configure_dotfiles: true
+
+installed_packages:
+  - fish
+  - gnupg2
+  - unzip
+  - wget
+  - zsh
+
+homebrew_use_brewfile: true
+homebrew_brewfile_dir: "{{ playbook_dir }}"
+
+wsl_interop_append_windows_path: false
+
+git_username: Jacquin Moon
+git_email: jacquindev@outlook.com
+
+dotfiles_repo: https://github.com/jacquindev/dotfiles.git
+dotfiles_repo_accept_hostkey: true
+dotfiles_repo_local_destination: ~/projects/dotfiles
+dotfiles_files:
+  - .zshenv
+  - .config

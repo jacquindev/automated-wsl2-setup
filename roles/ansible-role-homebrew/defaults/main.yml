@@ -1,0 +1,62 @@
+---
+# defaults file for ansible-role-homebrew
+
+homebrew_init_shell: true
+
+homebrew_profile: bash    # bash | zsh | fish
+
+bash_config_file: "{{ ansible_user_dir }}/.bashrc"
+zsh_config_file: "{{ ansible_user_dir }}/.zshrc"
+fish_config_file: "{{ ansible_user_dir }}/.config/fish/config.fish"
+
+homebrew_bash_block: |
+  if [ -f "{{ homebrew_executable }}" ]; then
+    eval "$({{ homebrew_executable }} shellenv)"
+  fi
+
+homebrew_fish_block: |
+  if test -e {{ homebrew_executable }}
+      eval ({{ homebrew_executable }} shellenv)
+  end
+
+homebrew_autocompletion: true
+
+homebrew_bash_completion: |
+  if type brew &>/dev/null; then
+    HOMEBREW_PREFIX="$(brew --prefix)"
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    else
+      for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+        [[ -r "${COMPLETION}" ]] && source "${COMPLETION}"
+      done
+      unset COMPLETION
+    fi
+    unset HOMEBREW_PREFIX
+  fi
+
+homebrew_zsh_completion: |
+  if type brew &>/dev/null; then
+    HOMEBREW_PREFIX="$(brew --prefix)"
+    if [[ -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]]; then
+      FPATH+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
+    fi
+  fi
+
+homebrew_fish_completion: |
+  if test -d (brew --prefix)"/share/fish/completions"
+      set -p fish_complete_path (brew --prefix)/share/fish/completions
+  end
+  if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+      set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+  end
+
+homebrew_taps: []
+homebrew_packages: []
+homebrew_blacklist: []
+
+homebrew_use_brewfile: false
+homebrew_brewfile_dir: ""
+homebrew_brewfile_file: "{{ homebrew_brewfile_dir }}/Brewfile"
+
+homebrew_update: false

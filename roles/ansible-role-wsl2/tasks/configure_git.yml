@@ -1,0 +1,28 @@
+---
+
+- name: Configure git username and email
+  block:
+    - name: Setup git username
+      community.general.git_config:
+        name: user.name
+        value: "{{ git_username }}"
+        scope: global
+      when: git_username is defined
+
+    - name: Setup git email
+      community.general.git_config:
+        name: user.email
+        value: "{{ git_email }}"
+        scope: global
+      when: git_email is defined
+
+- name: Setup git credential helper fact
+  ansible.builtin.set_fact:
+    git_credential_helper: "{{ __git_credential_helper }}"
+  when: git_credential_helper is not defined
+
+- name: Setup GCM for use with WSL
+  community.general.git_config:
+    name: credential.helper
+    value: "{{ git_credential_helper }}"
+    scope: global

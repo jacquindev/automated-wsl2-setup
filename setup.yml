@@ -1,0 +1,26 @@
+---
+
+- name: Setup WSL2 machine (Ubuntu)
+  hosts: localhost
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - name: Include playbook configuration
+      ansible.builtin.include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ["always"]
+
+  roles:
+    - role: ansible-role-wsl2
+      tags: ["wsl2"]
+
+    - role: ansible-role-homebrew
+      when: configure_homebrew
+      tags: ["homebrew"]
+
+    - role: geerlingguy.dotfiles
+      when: configure_dotfiles
+      tags: ["dotfiles"]

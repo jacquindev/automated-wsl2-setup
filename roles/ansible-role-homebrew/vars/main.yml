@@ -1,0 +1,10 @@
+---
+# vars file for ansible-role-homebrew
+
+homebrew_install_script: https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+
+homebrew_prefix: /home/linuxbrew/.linuxbrew
+
+homebrew_bin_path: "{{ homebrew_prefix }}/bin"
+
+homebrew_executable: "{{ homebrew_bin_path }}/brew"

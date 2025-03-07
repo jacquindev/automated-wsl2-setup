@@ -1,0 +1,14 @@
+---
+# tasks file for ansible-role-wsl2
+
+- name: Ensure prerequisites available
+  ansible.builtin.include_tasks: setup_{{ ansible_os_family }}.yml
+
+- name: Configure WSL settings
+  ansible.builtin.include_tasks: configure_wsl.yml
+
+- name: Ensure XDG directories exists
+  ansible.builtin.include_tasks: xdg.yml
+
+- name: Configure git settings
+  ansible.builtin.include_tasks: configure_git.yml

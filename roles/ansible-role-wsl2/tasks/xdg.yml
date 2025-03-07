@@ -1,0 +1,10 @@
+---
+
+- name: Ensure XDG directories exists
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: u+rwx
+  loop: "{{ xdg_skeleton_paths }}"

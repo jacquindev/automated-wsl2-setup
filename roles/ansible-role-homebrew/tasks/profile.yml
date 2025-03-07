@@ -1,0 +1,55 @@
+---
+
+- name: Set shell config file fact
+  ansible.builtin.set_fact:
+    shell_config_file: >
+      {% if homebrew_profile == 'bash' %}
+      {{ bash_config_file }}
+      {% elif homebrew_profile == 'zsh' %}
+      {{ zsh_config_file }}
+      {% elif homebrew_profile == 'fish' %}
+      {{ fish_config_file }}
+      {% endif %}
+
+- name: Setup homebrew_block fact
+  ansible.builtin.set_fact:
+    homebrew_block: >
+      {% if homebrew_profile == 'bash' %}
+      {{ homebrew_bash_block }}
+      {% elif homebrew_profile == 'zsh' %}
+      {{ homebrew_bash_block }}
+      {% elif homebrew_profile == 'fish' %}
+      {{ homebrew_fish_block }}
+      {% endif %}
+
+- name: Set homebrew_completion_block fact
+  ansible.builtin.set_fact:
+    homebrew_completion_block: >
+      {% if homebrew_profile == 'bash' %}
+      {{ homebrew_bash_completion }}
+      {% elif homebrew_profile == 'zsh' %}
+      {{ homebrew_zsh_completion }}
+      {% elif homebrew_profile == 'fish' %}
+      {{ homebrew_fish_completion }}
+      {% endif %}
+
+- name: Add Homebrew shell integration
+  ansible.builtin.blockinfile:
+    path: "{{ shell_config_file }}"
+    block: "{{ homebrew_block }}"
+    marker: "### {mark} HOMEBREW SHELL INTEGRATION BLOCK"
+    mode: u+rwx
+    state: present
+    create: true
+    prepend_newline: true
+
+- name: Add Homebrew auto-completion
+  ansible.builtin.blockinfile:
+    path: "{{ shell_config_file }}"
+    block: "{{ homebrew_completion_block }}"
+    marker: "### {mark} HOMEBREW AUTO-COMPLETION BLOCK"
+    mode: u+rwx
+    state: present
+    create: true
+    prepend_newline: true
+  when: homebrew_autocompletion

@@ -1,0 +1,28 @@
+---
+
+- name: Perform a dist upgrade for Debian machine
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: true
+    cache_valid_time: 14400
+  become: true
+
+- name: Ensure git is installed
+  ansible.builtin.apt:
+    name: git
+    state: present
+  become: true
+
+- name: Ensure packages in the list for Debian
+  ansible.builtin.apt:
+    name: "{{ installed_packages }}"
+    state: present
+  become: true
+  when: installed_packages | length > 0
+
+- name: Disable packages in the list for Debian
+  ansible.builtin.apt:
+    name: "{{ disabled_packages }}"
+    state: absent
+  become: true
+  when: disabled_packages | length > 0

@@ -1,0 +1,39 @@
+---
+# defaults file for ansible-role-wsl2
+
+installed_packages: []
+
+disabled_packages: []
+
+# Settings for wsl.conf file
+# More information, please visit:
+# - https://learn.microsoft.com/en-us/windows/wsl/wsl-config
+wsl_username: "{{ ansible_user_id }}"
+wsl_boot_systemd: true
+wsl_boot_command: ""
+wsl_hostname: ""
+wsl_network_generate_hosts: true
+wsl_network_generate_resolve_config: true
+wsl_interop_enabled: true
+wsl_interop_append_windows_path: true
+wsl_automount_enabled: true
+wsl_automount_fstab: true
+wsl_automount_root: /mnt/
+wsl_automount_options: "metadata,umask=77,fmask=11"
+
+xdg_config_home: "{{ ansible_user_dir }}/.config"
+xdg_cache_home: "{{ ansible_user_dir }}/.cache"
+xdg_data_home: "{{ ansible_user_dir }}/.local/share"
+xdg_state_home: "{{ ansible_user_dir }}/.local/state"
+xdg_bin_home: "{{ ansible_user_dir }}/.local/bin"
+xdg_runtime_dir: "{{ ansible_user_dir }}/.xdg"
+xdg_projects_dir: "{{ ansible_user_dir }}/projects"
+
+xdg_skeleton_paths:
+  - "{{ xdg_config_home }}"
+  - "{{ xdg_cache_home }}"
+  - "{{ xdg_data_home }}"
+  - "{{ xdg_state_home }}"
+  - "{{ xdg_bin_home }}"
+  - "{{ xdg_runtime_dir }}"
+  - "{{ xdg_projects_dir }}"
