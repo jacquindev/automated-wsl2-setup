@@ -6,6 +6,8 @@ configure_homebrew: true
 configure_vscode: true
 
 installed_packages:
+  - binutils
+  - coreutils
   - fish
   - gnupg2
   - lsb-release

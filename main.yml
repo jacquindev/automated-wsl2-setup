@@ -1,6 +1,6 @@
 ---
 
-- name: Setup WSL2 machine (Ubuntu)
+- name: Setup WSL2 machine (Debian / Ubuntu / CentOS)
   hosts: all
 
   vars_files:
