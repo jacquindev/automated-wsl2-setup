@@ -23,7 +23,7 @@ This repository contains Ansible playbook to automatically configure WSL2 instan
 > This playbook is fully configurable. <br>
 > You can skip or reconfigure any task for your needs. See [Usage](#Usage) for more information.
 
-## Supports
+## Supported Platforms
 
 The following WSL2 images are currently supported (**tested**):
 
