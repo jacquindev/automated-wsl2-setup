@@ -5,8 +5,6 @@ This repository contains Ansible playbook to automatically configure WSL2 instan
 > [!WARNING]
 > This is a **WORK IN PROGRESS** project. Please use with caution!!
 
-<br>
-
 ## Requirements
 
 - [Git](https://git-scm.com/downloads) version **v2.39.0 or greater** to be installed on the machine.
