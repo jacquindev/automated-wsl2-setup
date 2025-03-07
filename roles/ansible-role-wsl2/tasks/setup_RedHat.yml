@@ -42,14 +42,14 @@
         state: latest
         update_cache: true
 
+    - name: Update cache
+      ansible.builtin.dnf:
+        update_cache: true
+
     - name: Enable crb repository
       community.general.dnf_config_manager:
         name: crb
         state: enabled
-
-    - name: Update cache
-      ansible.builtin.dnf:
-        update_cache: true
 
     - name: Enable wslutilities copr repository
       community.general.copr:
