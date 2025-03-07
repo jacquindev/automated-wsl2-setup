@@ -1,7 +1,7 @@
 ---
 
 - name: Setup WSL2 machine (Ubuntu)
-  hosts: localhost
+  hosts: all
 
   vars_files:
     - default.config.yml
@@ -15,7 +15,7 @@
 
   roles:
     - role: ansible-role-wsl2
-      tags: ["wsl2"]
+      tags: ["wsl2", "wsl"]
 
     - role: ansible-role-homebrew
       when: configure_homebrew
@@ -24,3 +24,7 @@
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
       tags: ["dotfiles"]
+
+    - role: geerlingguy.docker
+      when: configure_docker
+      tags: ["docker"]

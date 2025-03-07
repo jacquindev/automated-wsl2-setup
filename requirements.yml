@@ -2,3 +2,7 @@
 
 roles:
   - name: geerlingguy.dotfiles
+  - name: geerlingguy.docker
+
+collections:
+  - name: community.general
