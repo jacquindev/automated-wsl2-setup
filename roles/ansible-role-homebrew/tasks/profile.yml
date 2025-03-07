@@ -19,7 +19,7 @@
     marker: "### {mark} HOMEBREW SHELL INTEGRATION BLOCK"
     mode: u+rwx
     prepend_newline: true
-    append_newline: false
+    append_newline: true
     state: present
     create: true
 
@@ -31,7 +31,7 @@
     mode: u+rwx
     create: true
     prepend_newline: true
-    append_newline: false
+    append_newline: true
     state: present
     create: true
   when: homebrew_autocompletion
