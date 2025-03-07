@@ -35,7 +35,7 @@ Example Playbook
 ----------------
 
 ```yaml
-- name: Install Homebrew and add Homebrew to .bashrc
+- name: Install Homebrew and add Homebrew integration to fish shell profile file.
   hosts: localhost
 
   vars:
