@@ -1,4 +1,4 @@
 ---
 # vars file for ansible-role-wsl2
 
-__git_credential_helper: /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
+__git_credential_helper: /mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe
