@@ -1,6 +1,10 @@
 [boot]
-systemd = {{ wsl_boot_systemd }}
-{% if wsl_boot_command | length > 0 %}
+{% if wsl_boot_systemd is defined %}
+systemd = {{ wsl_boot_command | bool }}
+{% else %}
+systemd = true
+{% endif %}
+{% if wsl_boot_command is defined and wsl_boot_command | length > 0 %}
 command = {{ wsl_boot_command }}
 {% endif %}
 
@@ -8,18 +12,26 @@ command = {{ wsl_boot_command }}
 default = {{ wsl_username }}
 
 [network]
-{% if wsl_hostname | length > 0 %}
+{% if wsl_hostname is defined %}
 hostname = {{ wsl_hostname }}
 {% endif %}
-generateHosts = {{ wsl_network_generate_hosts }}
-generateResolvConf = {{ wsl_network_generate_resolve_config }}
+{% if wsl_network_generate_hosts is defined %}
+generateHosts = {{ wsl_network_generate_hosts | bool }}
+{% endif %}
+{% if wsl_network_generate_resolve_config is defined %}
+generateResolvConf = {{ wsl_network_generate_resolve_config | bool }}
+{% endif %}
 
 [interop]
-enabled = {{ wsl_interop_enabled }}
-appendWindowsPath = {{ wsl_interop_append_windows_path }}
+{% if wsl_interop_enabled is defined %}
+enabled = {{ wsl_interop_enabled | bool }}
+{% endif %}
+{% if wsl_interop_append_windows_path is defined %}
+appendWindowsPath = {{ wsl_interop_append_windows_path | bool }}
+{% endif %}
 
 [automount]
-enabled = {{ wsl_automount_enabled }}
-mountFsTab = {{ wsl_automount_fstab }}
+enabled = {{ wsl_automount_enabled | bool }}
+mountFsTab = {{ wsl_automount_fstab | bool }}
 root = {{ wsl_automount_root }}
 options = "{{ wsl_automount_options }}"
