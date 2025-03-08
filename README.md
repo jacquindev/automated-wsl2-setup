@@ -3,7 +3,9 @@
 This repository contains Ansible playbook to automatically configure WSL2 instance.
 
 > [!WARNING]
-> This is a **WORK IN PROGRESS** project. Please use with caution!!
+> This is a **WORK IN PROGRESS** project. Please use with caution!! <br>
+> <br>
+> **PLEASE DO NOT RUN WITH ROOT PRIVILEGE**
 
 ## Requirements
 
@@ -150,6 +152,19 @@ vscode_extensions_uninstall:
   - ms-azuretools.vscode-docker
 ```
 
+To install and setup [Jenkins]() on your WSL instance, simply configure those settings:
+
+```yaml
+configure_jenkins: true
+
+# Edit the list of jenkins plugins you would like to install:
+jenkins_plugins: []
+
+jenkins_restart_method: safe-restart 	# service | safe-restart
+```
+
+For more information, please see [geerlingguy.jenkins](https://github.com/geerlingguy/ansible-role-jenkins)
+
 In some cases, you might not want to use *[Docker Desktop](https://www.docker.com/products/docker-desktop/)* on your Windows machine, you should install `Docker` on your WSL2 instance.
 
 This can easily be done by setting **`configure_docker`** to **`true`** in your `config.yml` file.
@@ -163,6 +178,7 @@ Other references/sources:
 - [geerlingguy.mac](https://github.com/geerlingguy/ansible-collection-mac)
 - [geerlingguy.dotfiles](https://github.com/geerlingguy/ansible-role-dotfiles)
 - [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker)
+- [geerlingguy.jenkins](https://github.com/geerlingguy/ansible-role-jenkins)
 - [fazlearefin/ubuntu-dev-machine-setup](https://github.com/fazlearefin/ubuntu-dev-machine-setup)
 
 ## License
