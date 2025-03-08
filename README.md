@@ -59,7 +59,7 @@ Any futher updates and improvements will be available soon.
 	- You can do this *manually* **OR**
 	- (Recommended) Run the ***[init.sh](./init.sh)*** to setup [Ansible](https://docs.ansible.com/ansible/latest/index.html) on your machine.
 
-4. Install `requirements` for this playbook:
+4. Ensure [required Ansible roles and collections](./requirements.yml) of this playbook by using `ansible-galaxy` command:
 
 	```bash
 	ansible-galaxy install -r requirements.yml
