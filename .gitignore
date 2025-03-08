@@ -1,2 +1,1 @@
-roles/geerlingguy.dotfiles
-roles/geerlingguy.docker
+roles/geerlingguy*
