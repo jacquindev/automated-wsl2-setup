@@ -32,3 +32,8 @@
     - role: geerlingguy.docker
       when: configure_docker
       tags: ["docker"]
+
+    - role: geerlingguy.jenkins
+      when: configure_jenkins
+      become: true
+      tags: ["jenkins"]
