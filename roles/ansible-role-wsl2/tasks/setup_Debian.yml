@@ -15,17 +15,17 @@
 
 - name: Ensure packages in the list for Debian
   ansible.builtin.apt:
-    name: "{{ installed_packages }}"
+    name: "{{ apt_installed_packages }}"
     state: present
   become: true
-  when: installed_packages | length > 0
+  when: apt_installed_packages | length > 0
 
 - name: Disable packages in the list for Debian
   ansible.builtin.apt:
-    name: "{{ disabled_packages }}"
+    name: "{{ apt_disabled_packages }}"
     state: absent
   become: true
-  when: disabled_packages | length > 0
+  when: apt_disabled_packages | length > 0
 
 - name: Ensure wslu is installed (Ubuntu)
   when: ansible_distribution == 'Ubuntu'
