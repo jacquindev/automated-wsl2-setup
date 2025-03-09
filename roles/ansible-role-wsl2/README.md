@@ -12,8 +12,11 @@ Role Variables
 --------------
 
 ```yaml
-installed_packages: []    # List of packages to install
-disabled_packages: []     # List of packages to disable
+apt_installed_packages: []    # List of packages to install via apt
+apt_disabled_packages: []     # List of packages to disable via apt
+
+dnf_installed_packages: []    # List of packages to install via dnf/yum
+dnf_disabled_packages: []     # List of packages to disable via dnf/yum
 ```
 
 The below settings will be defined in `/etc/wsl.conf` file. Feel free to modify:
