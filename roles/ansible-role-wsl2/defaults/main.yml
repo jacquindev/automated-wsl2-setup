@@ -1,9 +1,11 @@
 ---
 # defaults file for ansible-role-wsl2
 
-installed_packages: []
+apt_installed_packages: []
+apt_disabled_packages: []
 
-disabled_packages: []
+dnf_installed_packages: []
+dnf_disabled_packages: []
 
 # Settings for wsl.conf file
 # More information, please visit:
