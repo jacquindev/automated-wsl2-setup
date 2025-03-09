@@ -2,6 +2,7 @@
 
 configure_dotfiles: true
 configure_homebrew: true
+
 configure_vscode: false
 
 configure_docker: false
@@ -57,6 +58,7 @@ vscode_extensions_install:
   - github.copilot-chat
   - github.vscode-github-actions
   - github.vscode-pull-request-github
+  - hashicorp.terraform
   - mechatroner.rainbow-csv
   - ms-azuretools.vscode-docker
   - ms-python.debugpy
