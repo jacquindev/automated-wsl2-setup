@@ -18,17 +18,17 @@
 
 - name: Ensure packages in the list for RedHat
   ansible.builtin.dnf:
-    name: "{{ installed_packages }}"
+    name: "{{ dnf_installed_packages }}"
     state: present
   become: true
-  when: installed_packages | length > 0
+  when: dnf_installed_packages | length > 0
 
 - name: Disable packages in the list for RedHat
   ansible.builtin.dnf:
-    name: "{{ disabled_packages }}"
+    name: "{{ dnf_disabled_packages }}"
     state: absent
   become: true
-  when: disabled_packages | length > 0
+  when: dnf_disabled_packages | length > 0
 
 - name: Ensure wslu is installed (RedHat >= 8)
   become: true
