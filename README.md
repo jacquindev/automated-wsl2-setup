@@ -94,7 +94,7 @@ Supposed that you are setting on **CentOS WSL2** machine:
 
 ```yaml
 # Packages to install via dnf:
-installed_packages:
+dnf_installed_packages:
   - epel-release
   - dnf-plugins-core
   - wget
