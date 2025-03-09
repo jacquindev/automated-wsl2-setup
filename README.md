@@ -17,20 +17,18 @@ This repository contains Ansible playbook to automatically configure WSL2 instan
 
 > [!WARNING]
 > This is a **WORK IN PROGRESS** project. Please use with caution!! <br>
-> <br>
-> **PLEASE DO NOT RUN WITH ROOT PRIVILEGE**
 
 ## Requirements
 
-- [Git](https://git-scm.com/downloads) version **v2.39.0 or greater** to be installed on the machine.
+**[Git](https://git-scm.com/downloads)** version **v2.39.0 or greater** to be installed on the machine.
 
-	```bash
-	# On Ubuntu/Debian
-	sudo apt-get install -y git
+```bash
+# On Ubuntu/Debian
+sudo apt-get install -y git
 
-	# On CentOS
-	sudo dnf install -y git
-	```
+# On CentOS
+sudo dnf install -y git
+```
 
 ## Features
 
@@ -59,30 +57,30 @@ Any futher updates and improvements will be available soon.
 
 ## Installation
 
-1. Clone this repository using `git`:
+### 1. Clone this repository using `git`
 
-	```bash
-	git clone https://github.com/jacquindev/automated-wsl2-setup.git /your/location
-	```
+```bash
+git clone https://github.com/jacquindev/automated-wsl2-setup.git /your/location
+```
 
-2. `cd` into `/your/location` of where you cloned this repo.
+### 2. `cd` into `/your/location` of where you cloned this repo
 
-3. [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
+### 3. [Install Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html)
 
-	- You can do this *manually* **OR**
-	- (Recommended) Run the ***[init.sh](./init.sh)*** to setup [Ansible](https://docs.ansible.com/ansible/latest/index.html) on your machine.
+- You can do this *manually* **OR**
+- (Recommended) Run the ***[init.sh](./init.sh)*** to setup [Ansible](https://docs.ansible.com/ansible/latest/index.html) on your machine.
 
-4. Ensure [required Ansible roles and collections](./requirements.yml) of this playbook by using `ansible-galaxy` command:
+### 4. Ensure [required Ansible roles and collections](./requirements.yml) of this playbook by using `ansible-galaxy` command:
 
-	```bash
-	ansible-galaxy install -r requirements.yml
-	```
+```bash
+ansible-galaxy install -r requirements.yml
+```
 
-5. Run the [main.yml](./main.yml) file to start the setup process:
+### 5. Run the [main.yml](./main.yml) file to start the setup process:
 
-	```bash
-	ansible-playbook --ask-become-pass main.yml
-	```
+```bash
+ansible-playbook --ask-become-pass main.yml
+```
 
 ## Usage
 
@@ -101,129 +99,159 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
 > [!IMPORTANT]
 > Please override any of the defaults configured in `default.config.yml` by creating a `config.yml` file and set different values for your preferences.
 
-#### Examples of a `config.yml` file
+👉👉👉 **EXAMPLES OF A `config.yml` FILE:**
 
-Supposed that you are setting on **CentOS WSL2** machine:
+- Supposed that you are running this playbook on **CentOS** WSL2 machine:
 
-```yaml
-# Packages to install via dnf:
-dnf_installed_packages:
-  - epel-release
-  - dnf-plugins-core
-  - wget
-  - unzip
+  ```yaml
+  dnf_installed_packages:
+    - epel-release
+    - dnf-plugins-core
+    - wget
+    - unzip
+    - zsh
+  ```
 
-# wsl.conf settings
-wsl_boot_command: service docker start
-wsl_hostname: centos-wsl
+- On **Ubuntu/Debian** WSL2 machine:
 
-# Required if you want to setup git to communicate with WSL2
-git_username: John Doe
-git_email: johndoe@example.com
+  ```yaml
+  apt_installed_packages:
+    - apt-transport-https
+    - wget
+    - unzip
+    - zsh
+  ```
 
-# To NOT configure your machine with Homebrew (do not install Homebrew and its packages)
-configure_homebrew: false
+- For `wsl.conf` settings, more options can be found at **[ansible-role-wsl2](./roles/ansible-role-wsl2/README.md)**. These settings are based on official [Microsoft's Advanced settings configuration in WSL](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#wslconf).
 
-# To exclude the installations by homebrew using Brewfile:
-homebrew_use_brewfile: false
-homebrew_taps:
-  - hashicorp/tap
-homebrew_packages:
-  - eza
-  - gh
-  - git-extras
-  - hashicorp/tap/terraform
-  - hashicorp/tap/vagrant
+  ```yaml
+  wsl_hostname: centos-wsl
+  wsl_boot_command: service docker start
+  ```
 
-# To NOT configure your machine with dotfiles:
-configure_dotfiles: false
+- Configure [git](https://git-scm.com/) username and email:
 
-# Specific dotfiles values:
-# For more information, please visit:
-# - https://github.com/geerlingguy/ansible-role-dotfiles
-dotfiles_repo: https://github.com/<your_git_name>/<your_git_repo_name>.git
-dotfiles_repo_version: master
-```
+  ```yaml
+  git_username: John Doe
+  git_email: johndoe@example.com
+  ```
 
-This playbook has *`configure_vfox`* options, which allows you to quickly install apps for your DEVELOPMENT ENVIRONMENT. Simple usage can be defined in your `config.yml` as below:
+- [Homebrew]() related settings:
 
-```yaml
-configure_vfox: true
+  ```yaml
+  # To NOT install and setup Homebrew on your machine
+  configure_homebrew: false
 
-# REQUIRED*: change this into your shell you are USING
-# available options are: bash / zsh / fish
-vfox_shell: bash
+  # To NOT install default packages list in this repo by its Brewfile
+  homebrew_use_brewfile: false
 
-vfox_plugins:
-  - name: nodejs
-    versions:
-      - 23.9.0    # latest available
-      - 22.14.0   # LTS version
-    global: 23.9.0
+  # To install packages from Brewfile but at a different location, let's say the Brewfile is in ~/Brewfile
+  homebrew_brewfile_dir: "{{ ansible_user_dir }}"
 
-  - name: java
-    versions:
-      - 21.0.2-graalce
-      - 17.0.14+7-amzn
-    global: 21.0.2-graalce
+  # OR let Ansible do its jobs
+  # Tap Homebrew repositories
+  homebrew_taps:
+    - hashicorp/tap
 
-  - name: golang
-    versions:
-      - 1.24.1
-    global: 1.24.1
-```
+  # Install Homebrew packages
+  homebrew_packages:
+    - bat
+    - eza
+    - gh
+    - git-extras
+    - hashicorp/tap/terraform
+    - hashicorp/tap/vagrant
+  ```
 
-To install / uninstall [Visual Studio Code](https://code.visualstudio.com/) extensions for your WSL, please setup the following settings:
+- Quickly bootstrap your machine with your own dotfiles repository, for more information please visit: **[geerlingguy.dotfiles](https://github.com/geerlingguy/ansible-role-dotfiles)**
 
-Please note that this supposed you already installed [VS Code](https://code.visualstudio.com/) on your Windows local machine and have [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension installed.
+  ```yaml
+  # Set this to `false` to NOT setup your machine with dotfiles
+  configure_dotfiles: true
 
-Ensure that in your `[interop]` section of `wsl.conf` file, `enabled=true` and `appendWindowsPath=true`.
+  # Where is your dotfiles repository located?
+  dotfiles_repo: https://github.com/<your_git_username>/<your_dotfiles_repo_name>.git
+  dotfiles_repo_version: master
+  ```
 
-For more information, please check out this link -> **[ansible-role-vscode](./roles/ansible-role-vscode/README.md)**.
+- This playbook use **[vfox](https://vfox.dev/)** as a [development environments manager](./roles/ansible-role-vfox/README.md). To enable the capability of installing development tools, in your `config.yml` file:
 
-```yaml
-configure_vscode: true
+  ```yaml
+  configure_vfox: true
 
-vscode_extensions_install:
+  # This is REQUIRED for correct `vfox` shell initialization in Ansible
+  # Change this variable into with SHELL you are USING, 
+  # available options are: bash | zsh | fish
+  vfox_shell: bash
+
+  # Do you want to let vfox use legacy version file?
+  vfox_legacy_version: true
+
+  # Define a list of plugins and their package versions
+  vfox_plugins:
+    - name: nodejs
+      versions:
+        - 23.9.0
+        - 22.14.0
+      global: 23.9.0
+    
+    - name: java
+      versions:
+        - 21.0.2-graalce
+        - 17.0.14+7-amzn
+      global: 21.0.2-graalce
+  ```
+
+- To let Ansible to install [Visual Studio Code](https://code.visualstudio.com/) extensions on your WSL2:
+
+  ```yaml
+  configure_vscode: true
+
+  vscode_extensions_install:
   - redhat.ansible
   - redhat.vscode-yaml
   - tamasfe.even-better-toml
 
-vscode_extensions_uninstall:
+  vscode_extensions_uninstall:
   - ms-azuretools.vscode-docker
-```
+  ```
 
-To install and setup [Jenkins]() on your WSL instance, simply configure those settings:
+- Please note that this supposed you already installed [Visual Studio Code](https://code.visualstudio.com/) on your Windows local machine, and have [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) installed. Also, ensure that your WSL2 instance have VSCode on `PATH`. For instance, your `/etc/wsl.conf`'s `[interop]` section label should have settings: `enabled=true` and `appendWindowsPath`. These are usually enabled by default.
 
-```yaml
-configure_jenkins: true
+- For more information, have a look at **[ansible-role-vscode](./roles/ansible-role-vscode/README.md)**.
 
-# Edit the list of jenkins plugins you would like to install:
-jenkins_plugins:
-  - ansicolor
-  - blueocean
-  - docker-workflow
+- On a DevOps machine, you would like to install and start [Jenkins](https://www.jenkins.io/) after fresh setup. This can be done by simply configure those settings:
 
-jenkins_restart_method: safe-restart 	# service | safe-restart
-```
+  ```yaml
+  configure_jenkins: true
 
-For more information, please see [geerlingguy.jenkins](https://github.com/geerlingguy/ansible-role-jenkins)
+  # Edit the list of jenkins plugins you would like to install:
+  jenkins_plugins:
+    - ansicolor
+    - blueocean
+    - docker-workflow
 
-In some cases, you might not want to use *[Docker Desktop](https://www.docker.com/products/docker-desktop/)* on your Windows machine, you should install `Docker` on your WSL2 instance.
+  jenkins_restart_method: safe-restart 	# service | safe-restart
+  ```
 
-This can easily be done by setting **`configure_docker`** to **`true`** in your `config.yml` file.
+- Any further [Jenkins](https://www.jenkins.io/)'s setup configurations, see **[geerlingguy.jenkins](https://github.com/geerlingguy/ansible-role-jenkins)**
+
+- In some cases, you might not want to use [Docker Desktop](https://www.docker.com/products/docker-desktop/) on your Windows local machine. You can install [Docker](https://www.docker.com/) inside the WSL2 instance by setting `configure_docker` to `true` in your `config.yml` file. More specific settings for this behavior can be found at **[geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker)**
 
 ## Credits
 
-This project was heavily inspired by [geerlingguy/mac-dev-playbook](https://github.com/geerlingguy/mac-dev-playbook)
+This project was inspired by:
 
-Other references/sources:
+- [geerlingguy/mac-dev-playbook](https://github.com/geerlingguy/mac-dev-playbook)
+- [fazlearefin/ubuntu-dev-machine-setup](https://github.com/fazlearefin/ubuntu-dev-machine-setup)
+
+Other references / resources:
 
 - [geerlingguy.mac](https://github.com/geerlingguy/ansible-collection-mac)
 - [geerlingguy.dotfiles](https://github.com/geerlingguy/ansible-role-dotfiles)
 - [geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker)
 - [geerlingguy.jenkins](https://github.com/geerlingguy/ansible-role-jenkins)
-- [fazlearefin/ubuntu-dev-machine-setup](https://github.com/fazlearefin/ubuntu-dev-machine-setup)
+
 
 ## License
 
