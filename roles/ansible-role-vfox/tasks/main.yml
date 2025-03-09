@@ -1,0 +1,63 @@
+---
+# tasks file for ansible-role-vfox
+
+- name: Check if vfox is installed
+  ansible.builtin.command: which vfox
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+  register: vfox_check
+
+- name: Install vfox using Homebrew if not found
+  community.general.homebrew:
+    name: vfox
+    state: present
+  when: vfox_check.stdout == ''
+  register: vfox_homebrew
+
+- name: Set vfox executable fact
+  ansible.builtin.set_fact:
+    vfox_executable: "{{ '/home/linuxbrew/.linuxbrew/bin/vfox' if vfox_homebrew.changed else vfox_check.stdout if vfox_check.stdout != '' }}"
+
+- name: Detect vfox shell hook
+  ansible.builtin.set_fact:
+    vfox_shell_hook: "{{ vfox_bash_hook if vfox_shell == 'bash' else vfox_zsh_hook if vfox_shell == 'zsh' else vfox_fish_hook if vfox_shell == 'fish' }}"
+
+- name: Enable or disable vfox legacy version file
+  ansible.builtin.command: "{{ vfox_executable }} config legacyVersionFile.enable {{ vfox_legacy_version }}"
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+
+- name: Add vfox plugins
+  ansible.builtin.shell:
+    cmd: |
+      {{ vfox_shell_hook }}
+      {{ vfox_executable }} add {{ item.name }}
+    creates: "{{ ansible_user_dir }}/.version-fox/plugin/{{ item.name }}"
+  loop: "{{ vfox_plugins }}"
+  when: vfox_plugins | length > 0
+
+- name: Install vfox version packages
+  ansible.builtin.shell:
+    cmd: |
+      {{ vfox_shell_hook }}
+      {{ vfox_executable }} install {{ item.0.name }}@{{ item.1 }}
+    creates: "{{ ansible_user_dir }}/.version-fox/cache/{{ item.0.name }}/v-{{ item.1 }}"
+  with_subelements:
+    - "{{ vfox_plugins }}"
+    - versions
+    - flags:
+      skip_missing: true
+  when: vfox_plugins | length > 0
+
+- name: Set global vfox app version
+  ansible.builtin.shell:
+    cmd: |
+      {{ vfox_shell_hook }}
+      {{ vfox_executable }} use -g {{ item.name }}@{{ item.global | default(item.versions | sort | first) }}
+  loop: "{{ vfox_plugins }}"
+  when:
+    - vfox_plugins | length > 0
+    - item.versions | length > 0
+

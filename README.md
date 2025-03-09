@@ -101,7 +101,7 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
 > [!IMPORTANT]
 > Please override any of the defaults configured in `default.config.yml` by creating a `config.yml` file and set different values for your preferences.
 
-#### Example of a `config.yml` file
+#### Examples of a `config.yml` file
 
 Supposed that you are setting on **CentOS WSL2** machine:
 
@@ -145,6 +145,34 @@ dotfiles_repo: https://github.com/<your_git_name>/<your_git_repo_name>.git
 dotfiles_repo_version: master
 ```
 
+This playbook has *`configure_vfox`* options, which allows you to quickly install apps for your DEVELOPMENT ENVIRONMENT. Simple usage can be defined in your `config.yml` as below:
+
+```yaml
+configure_vfox: true
+
+# REQUIRED*: change this into your shell you are USING
+# available options are: bash / zsh / fish
+vfox_shell: bash
+
+vfox_plugins:
+  - name: nodejs
+    versions:
+      - 23.9.0    # latest available
+      - 22.14.0   # LTS version
+    global: 23.9.0
+
+  - name: java
+    versions:
+      - 21.0.2-graalce
+      - 17.0.14+7-amzn
+    global: 21.0.2-graalce
+
+  - name: golang
+    versions:
+      - 1.24.1
+    global: 1.24.1
+```
+
 To install / uninstall [Visual Studio Code](https://code.visualstudio.com/) extensions for your WSL, please setup the following settings:
 
 Please note that this supposed you already installed [VS Code](https://code.visualstudio.com/) on your Windows local machine and have [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) extension installed.
@@ -171,7 +199,10 @@ To install and setup [Jenkins]() on your WSL instance, simply configure those se
 configure_jenkins: true
 
 # Edit the list of jenkins plugins you would like to install:
-jenkins_plugins: []
+jenkins_plugins:
+  - ansicolor
+  - blueocean
+  - docker-workflow
 
 jenkins_restart_method: safe-restart 	# service | safe-restart
 ```

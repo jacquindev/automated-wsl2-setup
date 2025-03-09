@@ -3,6 +3,7 @@
 configure_dotfiles: true
 configure_homebrew: true
 
+configure_vfox: false
 configure_vscode: false
 
 configure_docker: false
@@ -44,6 +45,26 @@ dotfiles_home: "~"
 dotfiles_files:
   - .zshenv
   - .config
+
+# REQUIRED*: change this into your shell you are using, available options: bash/zsh/fish
+vfox_shell: fish
+
+vfox_plugins:
+  - name: nodejs
+    versions:
+      - 23.9.0  # latest available
+      - 22.14.0 # LTS version
+    global: 23.9.0
+
+  - name: java
+    versions:
+      - 21.0.2-graalce
+    global: 21.0.2-graalce
+
+  - name: golang
+    versions:
+      - 1.24.1
+    global: 1.24.1
 
 vscode_extensions_install:
   - christian-kohler.path-intellisense

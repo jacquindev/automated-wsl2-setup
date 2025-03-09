@@ -1,0 +1,6 @@
+---
+# vars file for ansible-role-vfox
+
+vfox_bash_hook: eval "$({{ vfox_executable }} activate bash)"
+vfox_zsh_hook: eval "$({{ vfox_executable }} activate zsh)"
+vfox_fish_hook: "{{ vfox_executable }} activate fish | source"

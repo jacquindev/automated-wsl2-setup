@@ -1,0 +1,15 @@
+---
+# defaults file for ansible-role-vfox
+
+# Change this variable to which shell you are using
+vfox_shell: bash  # bash | zsh | fish
+
+vfox_legacy_version: true
+
+vfox_plugins: []
+# vfox_plugins:
+#   - name: java
+#     versions:
+#       - 23.0.1+11-open
+#       - 17.0.14+7-amzn
+#     global: 17.0.14+7-amzn

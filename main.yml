@@ -21,6 +21,10 @@
       when: configure_homebrew
       tags: ["homebrew"]
 
+    - role: ansible-role-vfox
+      when: configure_vfox
+      tags: ["vfox"]
+
     - role: ansible-role-vscode
       when: configure_vscode
       tags: ["vscode", "code"]
