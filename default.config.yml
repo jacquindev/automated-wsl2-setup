@@ -7,12 +7,23 @@ configure_vscode: false
 configure_docker: false
 configure_jenkins: false
 
-installed_packages:
+apt_installed_packages:
+  - apt-transport-https
   - binutils
+  - conntrack
   - coreutils
   - curl
+  - fontconfig
   - gawk
   - gnupg2
+  - unzip
+  - wget
+  - zsh
+
+dnf_installed_packages:
+  - epel-release
+  - dnf-plugins-core
+  - fontconfig
   - unzip
   - wget
   - zsh
