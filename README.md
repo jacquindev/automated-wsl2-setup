@@ -5,7 +5,7 @@
   
   <p align="center">
     <a href="https://skillicons.dev">
-      <img src="https://skillicons.dev/icons?i=git,ansible,ubuntu,debian,redhat,docker,jenkins&theme=light" />
+      <img src="https://skillicons.dev/icons?i=ansible,ubuntu,debian,redhat,docker,jenkins,git&theme=dark" />
     </a>
   </p>
 </div>
