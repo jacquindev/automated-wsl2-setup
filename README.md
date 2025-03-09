@@ -1,6 +1,19 @@
-# Automated Setup WSL2 Machine
+<div align="center">
+  <h1>Automated Setup WSL2 Machine</h1>
+  
+  <br>
+  
+  <p align="center">
+    <a href="https://skillicons.dev">
+      <img src="https://skillicons.dev/icons?i=git,ansible,ubuntu,debian,redhat,docker,jenkins&theme=light" />
+    </a>
+  </p>
+</div>
+
+<br>
 
 This repository contains Ansible playbook to automatically configure WSL2 instance.
+
 
 > [!WARNING]
 > This is a **WORK IN PROGRESS** project. Please use with caution!! <br>
