@@ -44,7 +44,8 @@
         chdir: "{{ homebrew_brewfile_dir }}"
       register: brewfile_bundle
       check_mode: false
-      changed_when: brewfile_bundle.rc != 0
+      changed_when: brewfile_bundle.rc == 0
+      when: brewfile_check.stat.exists
 
     - name: Print result
       ansible.builtin.debug:
