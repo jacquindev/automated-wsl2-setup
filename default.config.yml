@@ -90,6 +90,7 @@ vscode_extensions_install:
   - redhat.ansible
   - redhat.vscode-xml
   - redhat.vscode-yaml
+  - samuelcolvin.jinjahtml
   - tamasfe.even-better-toml
   - timonwong.shellcheck
 
