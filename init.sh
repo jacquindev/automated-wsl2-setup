@@ -57,8 +57,11 @@ elif command -v dnf >/dev/null 2>&1; then
  	sudo dnf install -y python3 python3-pip pipx
 elif command -v pacman >/dev/null 2>&1; then
 	sudo pacman -Syu --noconfirm
- 	sudo pacman -S python python-pip python-pipx
+ 	sudo pacman -S --noconfirm python python-pip python-pipx
 fi
+
+# Temporarily add user bin PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 # Install minimal ansible package
 pipx install ansible-core
