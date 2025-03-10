@@ -95,6 +95,9 @@ vscode_extensions_install:
   - tamasfe.even-better-toml
   - timonwong.shellcheck
 
+docker_users:
+  - "{{ ansible_user_id }}"
+
 jenkins_plugins:
   - ansicolor
   - ant
