@@ -1,4 +1,2 @@
-roles/geerlingguy*
-
 # exclude user config file
 config.yml
