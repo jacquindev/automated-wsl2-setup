@@ -35,6 +35,7 @@
       {{ vfox_shell_hook }} && \
       {{ vfox_executable }} add {{ item.name }}
     creates: "{{ ansible_user_dir }}/.version-fox/plugin/{{ item.name }}"
+    executable: "/usr/bin/{{ vfox_shell }}"
   loop: "{{ vfox_plugins }}"
   when: vfox_plugins | length > 0
 
@@ -44,6 +45,7 @@
       {{ vfox_shell_hook }} && \
       {{ vfox_executable }} install {{ item.0.name }}@{{ item.1 }}
     creates: "{{ ansible_user_dir }}/.version-fox/cache/{{ item.0.name }}/v-{{ item.1 }}"
+    executable: "/usr/bin/{{ vfox_shell }}"
   with_subelements:
     - "{{ vfox_plugins }}"
     - versions
@@ -56,6 +58,7 @@
     cmd: |
       {{ vfox_shell_hook }} && \
       {{ vfox_executable }} use -g {{ item.name }}@{{ item.global | default(item.versions | sort | first) }}
+    executable: "/usr/bin/{{ vfox_shell }}"
   loop: "{{ vfox_plugins }}"
   when:
     - vfox_plugins | length > 0
