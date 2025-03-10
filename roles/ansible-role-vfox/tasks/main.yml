@@ -32,7 +32,7 @@
 - name: Add vfox plugins
   ansible.builtin.shell:
     cmd: |
-      {{ vfox_shell_hook }}
+      {{ vfox_shell_hook }} && \
       {{ vfox_executable }} add {{ item.name }}
     creates: "{{ ansible_user_dir }}/.version-fox/plugin/{{ item.name }}"
   loop: "{{ vfox_plugins }}"
@@ -41,7 +41,7 @@
 - name: Install vfox version packages
   ansible.builtin.shell:
     cmd: |
-      {{ vfox_shell_hook }}
+      {{ vfox_shell_hook }} && \
       {{ vfox_executable }} install {{ item.0.name }}@{{ item.1 }}
     creates: "{{ ansible_user_dir }}/.version-fox/cache/{{ item.0.name }}/v-{{ item.1 }}"
   with_subelements:
@@ -54,7 +54,7 @@
 - name: Set global vfox app version
   ansible.builtin.shell:
     cmd: |
-      {{ vfox_shell_hook }}
+      {{ vfox_shell_hook }} && \
       {{ vfox_executable }} use -g {{ item.name }}@{{ item.global | default(item.versions | sort | first) }}
   loop: "{{ vfox_plugins }}"
   when:
