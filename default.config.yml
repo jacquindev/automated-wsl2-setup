@@ -59,7 +59,8 @@ vfox_plugins:
   - name: java
     versions:
       - 21.0.2-graalce
-    global: 21.0.2-graalce
+      - 17.0.2+8
+    global: 17.0.2+8
 
   - name: golang
     versions:
