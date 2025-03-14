@@ -16,6 +16,14 @@
         scope: global
       when: git_email is defined
 
+- name: Configure other global settings for Git
+  community.general.git_config:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    scope: global
+  with_items: "{{ git_settings }}"
+  when: git_settings | length > 0
+
 - name: Setup git credential helper fact
   ansible.builtin.set_fact:
     git_credential_helper: "{{ __git_credential_helper }}"
