@@ -6,6 +6,8 @@ configure_homebrew: true
 configure_vfox: false
 configure_vscode: false
 
+extra_packages: false
+
 configure_docker: false
 configure_jenkins: false
 
@@ -43,6 +45,7 @@ dotfiles_home: "~"
 
 dotfiles_files:
   - .zshenv
+  - .czrc
   - .config
 
 # REQUIRED*: change this into your shell you are using, available options: bash/zsh/fish

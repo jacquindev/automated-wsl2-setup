@@ -25,6 +25,10 @@
       when: configure_vfox
       tags: ["vfox"]
 
+    - role: ansible-extra-packages
+      when: extra_packages
+      tags: ["extra", "extras"]
+
     - role: ansible-role-vscode
       when: configure_vscode
       tags: ["vscode", "code"]
