@@ -229,6 +229,10 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
 
 - In some cases, you might not want to use [Docker Desktop](https://www.docker.com/products/docker-desktop/) on your Windows local machine. You can install [Docker](https://www.docker.com/) inside the WSL2 instance by setting `configure_docker` to `true` in your `config.yml` file. More specific settings for this behavior can be found at **[geerlingguy.docker](https://github.com/geerlingguy/ansible-role-docker)**
 
+  ```yaml
+  configure_docker: true
+  ```
+
 - [Extra packages](./vars/packages.yml) can be overridden:
 
   ```yaml
