@@ -6,10 +6,10 @@ configure_homebrew: true
 configure_vfox: false
 configure_vscode: false
 
-extra_packages: false
-
 configure_docker: false
 configure_jenkins: false
+
+extra_packages: false
 
 apt_installed_packages:
   - apt-transport-https
@@ -61,8 +61,7 @@ vfox_plugins:
   - name: java
     versions:
       - 21.0.2-graalce
-      - 17.0.2+8
-    global: 17.0.2+8
+    global: 21.0.2-graalce
 
   - name: golang
     versions:
