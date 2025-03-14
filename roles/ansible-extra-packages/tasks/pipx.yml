@@ -11,10 +11,7 @@
   community.general.pipx:
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default('present') }}"
-    python: "{{ item.python | default(omit) }}"
     executable: "{{ pipx_command.stdout }}"
-    install_apps: "{{ bool if item.state == 'inject' }}"
-    install_deps: "{{ bool if item.state in ['install', 'latest', 'inject'] }}"
   with_items: "{{ pipx_packages }}"
   when:
     - pipx_command.stdout != ''
