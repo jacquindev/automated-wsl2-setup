@@ -64,3 +64,5 @@
     - vfox_plugins | length > 0
     - item.versions | length > 0
 
+- name: Per SDK packages installation
+  ansible.builtin.include_tasks: extra_packages.yml

@@ -13,3 +13,22 @@ vfox_plugins: []
 #       - 23.0.1+11-open
 #       - 17.0.14+7-amzn
 #     global: 17.0.14+7-amzn
+
+npm_packages: []
+# npm_packages:
+#   - name: npm-check-updates
+#     state: latest
+#   - czg
+
+composer_packages: []
+# composer_packages:
+#   - name: maglnet/composer-require-checker
+#     state: present
+#   - brainmaestro/composer-git-hooks
+
+go_packages: []
+# go_packages:
+#   - name: github.com/go-task/task/v3/cmd/task
+#     version: latest
+#   - name: go get github.com/apenella/go-ansible/v2
+#     version: v2.1.0
