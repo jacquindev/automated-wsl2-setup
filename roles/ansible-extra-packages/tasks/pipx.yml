@@ -1,0 +1,21 @@
+---
+
+- name: Get pipx command
+  ansible.builtin.command: which pipx
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+  register: pipx_command
+
+- name: Install pipx packages
+  community.general.pipx:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+    python: "{{ item.python | default(omit) }}"
+    executable: "{{ pipx_command.stdout }}"
+    install_apps: "{{ bool if item.state == 'inject' }}"
+    install_deps: "{{ bool if item.state in ['install', 'latest', 'inject'] }}"
+  with_items: "{{ pipx_packages }}"
+  when:
+    - pipx_command.stdout != ''
+    - pipx_packages | length > 0

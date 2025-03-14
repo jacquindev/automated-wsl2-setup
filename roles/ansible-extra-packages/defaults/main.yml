@@ -1,0 +1,26 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for ansible-extra-packages
+
+npm_packages: []
+# npm_packages:
+#   - name: npm-check-updates
+#     state: latest
+#   - czg
+
+composer_packages: []
+# composer_packages:
+#   - name: maglnet/composer-require-checker
+#     state: present
+#   - brainmaestro/composer-git-hooks
+
+go_packages: []
+# go_packages:
+#   - name: github.com/go-task/task/v3/cmd/task
+#     version: latest
+#   - name: go get github.com/apenella/go-ansible/v2
+#     version: v2.1.0
+
+pip_packages: []
+
+pipx_packages: []

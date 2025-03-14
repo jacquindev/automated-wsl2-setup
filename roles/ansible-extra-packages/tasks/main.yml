@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for ansible-extra-packages
+
+- name: Install global NPM packages
+  ansible.builtin.include_tasks: npm.yml
+
+- name: Install global Composer packages
+  ansible.builtin.include_tasks: composer.yml
+
+- name: Install global Go packages
+  ansible.builtin.include_tasks: go.yml
+
+- name: Install pipx packages
+  ansible.builtin.include_tasks: pipx.yml
+
+- name: Install pip packages
+  ansible.builtin.include_tasks: pip.yml

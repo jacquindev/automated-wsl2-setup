@@ -1,0 +1,15 @@
+---
+
+- name: Get go command
+  ansible.builtin.command: which go
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+  register: go_command
+
+- name: Install go packages
+  ansible.builtin.comand: "{{ go_command.stdout }} install {{ item.name | default(item) }}@{{ item.version | default('latest') }}"
+  when:
+    - go_command.stdout != ''
+    - go_packages | length > 0
+  loop: "{{ go_packages }}"

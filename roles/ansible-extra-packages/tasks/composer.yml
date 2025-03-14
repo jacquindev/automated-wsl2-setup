@@ -1,0 +1,19 @@
+---
+
+- name: Get composer command
+  ansible.builtin.command: which composer
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+  register: composer_command
+
+- name: Install composer packages
+  community.general.composer:
+    command: "{{ (item.state | default('present') == 'absent') | ternary('remove', 'require') }}"
+    arguments: "{{ item.name | default(item) }} {{ item.version | default('@stable') }}"
+    global_command: true
+    composer_executable: "{{ composer_command.stdout }}"
+  with_items: "{{ composer_packages }}"
+  when:
+    - composer_command.stdout != ''
+    - composer_packages | length > 0
