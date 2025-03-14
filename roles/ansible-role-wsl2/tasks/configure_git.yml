@@ -53,9 +53,3 @@
   register: ssh_pub_key_result
   become: true
   become_user: "{{ ansible_user_id }}"
-
-- name: Print result
-  ansible.builtin.debug:
-    msg:
-      - "Please add your SSH public key to your GitHub account:"
-      - "{{ ssh_pub_key_result.stdout }}"
