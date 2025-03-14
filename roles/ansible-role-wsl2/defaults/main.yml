@@ -50,3 +50,14 @@ xdg_config_block: |
   export XDG_BIN_HOME="{{ xdg_bin_home }}"
   export XDG_RUNTIME_DIR="{{ xdg_runtime_dir }}"
   export XDG_PROJECTS_DIR="{{ xdg_projects_dir }}"
+
+git_settings: []
+# git_settings:
+#   - name: am.threeWay
+#     value: true
+#   - name: help.autocorrect
+#     value: 1
+#   - name: rerere.enabled
+#     value: true
+#   - name: rerere.autoUpdate
+#     value: true
