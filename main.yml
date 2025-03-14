@@ -4,7 +4,8 @@
   hosts: all
 
   vars_files:
-    - default.config.yml
+    - vars/default.config.yml
+    - vars/packages.yml
 
   pre_tasks:
     - name: Include playbook configuration
@@ -25,10 +26,6 @@
       when: configure_vfox
       tags: ["vfox"]
 
-    - role: ansible-extra-packages
-      when: extra_packages
-      tags: ["extra", "extras"]
-
     - role: ansible-role-vscode
       when: configure_vscode
       tags: ["vscode", "code"]
@@ -36,6 +33,10 @@
     - role: geerlingguy.dotfiles
       when: configure_dotfiles
       tags: ["dotfiles"]
+
+    - role: ansible-extra-packages
+      when: extra_packages
+      tags: ["extra", "extras"]
 
     - role: geerlingguy.docker
       when: configure_docker
