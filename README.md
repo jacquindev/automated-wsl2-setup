@@ -2,12 +2,12 @@
 
 This repository contains Ansible playbook to automatically configure WSL2 instance.
 
-[![infrastructure](https://skillicons.dev/icons?i=ansible,ubuntu,debian,redhat,docker,jenkins,git)](https://skillicons.dev)
+> [!WARNING]
+> This is a **WORK IN PROGRESS** project. Please use with caution!! <br>
 
 <hr>
 
-> [!WARNING]
-> This is a **WORK IN PROGRESS** project. Please use with caution!! <br>
+[![infrastructures](https://skillicons.dev/icons?i=ansible,ubuntu,debian,redhat,docker,jenkins,git)](https://skillicons.dev)
 
 ## Requirements
 
