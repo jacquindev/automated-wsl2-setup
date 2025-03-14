@@ -1,0 +1,21 @@
+---
+
+- name: Get gem command
+  ansible.builtin.command: which gem
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+  register: gem_command
+
+- name: Install global Ruby gems
+  community.general.gem:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+    version: "{{ item.version | default(omit) }}"
+    gem_source: "{{ item.source | default(omit) }}"
+    user_install: false
+    executable: "{{ gem_command.stdout }}"
+  loop: "{{ gem_packages }}"
+  when:
+    - gem_command.stdout != ''
+    - gem_packages | length > 0
