@@ -1,4 +1,6 @@
 tap "homebrew/bundle"
+
+# General
 brew "bat"
 brew "btop"
 brew "dua-cli"
@@ -14,12 +16,14 @@ brew "shellcheck"
 brew "starship"
 brew "stow"
 brew "tealdeer"
+brew "thefuck"
 brew "vfox"
 brew "wrk"
 brew "yazi"
 brew "yq"
 brew "zoxide"
 
+# Git addons
 brew "gh"
 brew "git-delta"
 brew "git-extras"
@@ -27,6 +31,7 @@ brew "git-flow"
 brew "git-lfs"
 brew "lazygit"
 
+# Kubernetes applications
 brew "helm"
 brew "helmfile"
 brew "k3d"
@@ -37,6 +42,7 @@ brew "minikube"
 tap "derailed/k9s"
 brew "derailed/k9s/k9s"
 
+# Hashicorp packages
 tap "hashicorp/tap"
 brew "hashicorp/tap/terraform"
 brew "hashicorp/tap/vagrant"
