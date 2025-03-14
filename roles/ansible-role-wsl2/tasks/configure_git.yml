@@ -26,3 +26,36 @@
     name: credential.helper
     value: "{{ git_credential_helper }}"
     scope: global
+
+- name: Ensure that .ssh directory exist
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.ssh"
+    state: directory
+    mode: "700"
+
+- name: Generate SSH key pair for Git
+  community.crypto.openssh_keypair:
+    path: "{{ ansible_user_dir }}/.ssh/id_ed25519"
+    passphrase: ""
+    comment: "{{ git_email }}"
+    type: ed25519
+    mode: "600"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    force: false
+  become: true
+  become_user: "{{ ansible_user_id }}"
+  register: ssh_key_pair
+
+- name: Print SSH public key
+  ansible.builtin.command: "cat {{ ansible_user_dir }}/.ssh/id_ed25519.pub"
+  when: (ssh_key_pair.changed) or (ssh_key_pair is succeeded)
+  register: ssh_pub_key_result
+  become: true
+  become_user: "{{ ansible_user_id }}"
+
+- name: Print result
+  ansible.builtin.debug:
+    msg:
+      - "Please add your SSH public key to your GitHub account:"
+      - "{{ ssh_pub_key_result.stdout }}"
