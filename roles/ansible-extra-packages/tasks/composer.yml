@@ -1,5 +1,12 @@
 ---
 
+- name: Get PHP command
+  ansible.builtin.command: which php
+  check_mode: false
+  changed_when: false
+  ignore_errors: true
+  register: php_command
+
 - name: Get composer command
   ansible.builtin.command: which composer
   check_mode: false
@@ -10,10 +17,14 @@
 - name: Install composer packages
   community.general.composer:
     command: "{{ (item.state | default('present') == 'absent') | ternary('remove', 'require') }}"
-    arguments: "{{ item.name | default(item) }} {{ item.version | default('@stable') }}"
+    arguments: "{{ item.name | default(item) }}"
     global_command: true
     composer_executable: "{{ composer_command.stdout }}"
-  with_items: "{{ composer_packages }}"
+    php_path: "{{ php_command.stdout }}"
+    ignore_platform_reqs: true
+  loop: "{{ composer_packages }}"
   when:
+    - php_command.stdout != ''
     - composer_command.stdout != ''
     - composer_packages | length > 0
+  ignore_errors: true

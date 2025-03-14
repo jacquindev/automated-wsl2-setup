@@ -24,3 +24,5 @@ go_packages: []
 pip_packages: []
 
 pipx_packages: []
+
+gem_packages: []

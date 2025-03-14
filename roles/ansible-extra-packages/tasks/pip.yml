@@ -13,7 +13,7 @@
     state: "{{ item.state | default('present') }}"
     version: "{{ item.version | default(omit) }}"
     executable: "{{ pip_command.stdout }}"
-  with_items: "{{ pip_packages }}"
+  loop: "{{ pip_packages }}"
   when:
     - pip_command.stdout != ''
     - pip_packages | length > 0

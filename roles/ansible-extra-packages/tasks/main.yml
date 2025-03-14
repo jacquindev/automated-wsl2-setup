@@ -16,3 +16,6 @@
 
 - name: Install pip packages
   ansible.builtin.include_tasks: pip.yml
+
+- name: Install Ruby gems
+  ansible.builtin.include_tasks: gem.yml
