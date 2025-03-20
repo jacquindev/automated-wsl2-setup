@@ -81,3 +81,18 @@
     name: wslu
     state: present
   become: true
+
+- name: Ensure FUSE installed on RedHat machine
+  ansible.builtin.dnf:
+    name: fuse-sshfs
+    enablerepo: epel
+    state: present
+  become: true
+
+- name: Add FUSE to current user group
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    append: true
+    groups:
+      - fuse
+  become: true
