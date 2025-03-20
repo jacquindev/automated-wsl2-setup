@@ -15,11 +15,11 @@ wsl_username: "{{ ansible_user_id }}"
 # wsl_boot_command: ""
 # wsl_hostname: ""
 # wsl_network_generate_hosts: true
-# wsl_network_generate_resolve_config: true
+wsl_network_generate_resolve_config: false
 # wsl_interop_enabled: true
 # wsl_interop_append_windows_path: true
 wsl_automount_enabled: true
-wsl_automount_fstab: true
+wsl_automount_fstab: false
 wsl_automount_root: /mnt/
 wsl_automount_options: "metadata,umask=77,fmask=11"
 
