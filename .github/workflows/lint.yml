@@ -1,0 +1,29 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 5 * * 4"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Python3
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install test dependencies
+        run: pip3 install yamllint ansible-lint
+
+      - name: Lint code
+        run: |
+          yamllint .
+          ansible-lint -x 403
