@@ -69,6 +69,7 @@ vfox_plugins:
     global: 1.24.1
 
 vscode_extensions_install:
+  - bierner.github-markdown-preview
   - christian-kohler.path-intellisense
   - davidanson.vscode-markdownlint
   - dbaeumer.vscode-eslint
