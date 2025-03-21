@@ -22,6 +22,13 @@
   when: ansible_distribution == 'Ubuntu'
   become: true
 
+- name: Avoid duplicate Universe repository
+  ansible.builtin.apt_repository:
+    repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
+    state: absent
+  when: ansible_distribution == 'Ubuntu'
+  become: true
+
 - name: Ensure git is installed
   ansible.builtin.apt:
     name: git
