@@ -50,8 +50,8 @@
 # esac
 
 if command -v apt-get >/dev/null 2>&1; then
-	sudo apt-get update && \
-	sudo apt-get install -y python3 python3-pip pipx
+	sudo apt-get update &&
+		sudo apt-get install -y python3 python3-pip pipx
 elif command -v dnf >/dev/null 2>&1; then
 	sudo dnf update -y
 	sudo dnf install -y python3 python3-pip pipx
@@ -65,4 +65,5 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Install minimal ansible package
 pipx install --include-deps ansible
+pipx inject ansible argcomplete
 pipx install ansible-lint
