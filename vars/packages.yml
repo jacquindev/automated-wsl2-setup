@@ -1,20 +1,26 @@
 ---
 
-npm_packages:
-  - composerize
-  - czg
-  - git-open
-  - npm-check-updates
+npm_packages: []
+# npm_packages:
+#   - composerize
+#   - czg
+#   - git-open
+#   - git-recent
+#   - npm-check-updates
 
-go_packages:
-  - github.com/go-task/task/v3/cmd/task
-  - github.com/melkeydev/go-blueprint
+go_packages: []
+# go_packages:
+#   - github.com/go-task/task/v3/cmd/task
+#   - github.com/melkeydev/go-blueprint
 
-composer_packages:
-  - maglnet/composer-require-checker
-  - pyrech/composer-changelogs
+composer_packages: []
+# composer_packages:
+#   - maglnet/composer-require-checker
+#   - pyrech/composer-changelogs
 
-pipx_packages:
-  - cookiecutter
-  - poetry
-  - poethepoet
+pipx_packages: []
+# pipx_packages:
+#   - cookiecutter
+#   - poetry
+#   - poethepoet
+#   - yamllint

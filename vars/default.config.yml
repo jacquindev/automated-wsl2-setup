@@ -51,22 +51,23 @@ dotfiles_files:
 # REQUIRED*: change this into your shell you are using, available options: bash/zsh/fish
 vfox_shell: bash
 
-vfox_plugins:
-  - name: nodejs
-    versions:
-      - 23.9.0  # latest available
-      - 22.14.0 # LTS version
-    global: 23.9.0
+vfox_plugins: []
+# vfox_plugins:
+#   - name: nodejs
+#     versions:
+#       - 23.9.0  # latest available
+#       - 22.14.0 # LTS version
+#     global: 23.9.0
 
-  - name: java
-    versions:
-      - 21.0.2-graalce
-    global: 21.0.2-graalce
+#   - name: java
+#     versions:
+#       - 21.0.2-graalce
+#     global: 21.0.2-graalce
 
-  - name: golang
-    versions:
-      - 1.24.1
-    global: 1.24.1
+#   - name: golang
+#     versions:
+#       - 1.24.1
+#     global: 1.24.1
 
 vscode_extensions_install:
   - bierner.github-markdown-preview
