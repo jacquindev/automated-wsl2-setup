@@ -1,6 +1,15 @@
 ---
 # tasks file for ansible-role-vscode
 
+- name: Install VSCode Suggested Extensions for WSL
+  ansible.builtin.command: "code --install-extension {{ item }}"
+  register: vscode_install_ext_suggested
+  changed_when:
+    - vscode_install_ext_suggested.rc == 0
+    - '"already installed" not in vscode_install_ext_suggested.stdout'
+  loop: "{{ vscode_suggested_extensions }}"
+  when: vscode_install_suggested_extensions
+
 - name: Install VSCode Extensions for WSL
   ansible.builtin.command: "code --install-extension {{ item }}"
   register: vscode_install_ext
@@ -18,3 +27,32 @@
     - '"not installed" not in vscode_uninstall_ext.stdout'
   loop: "{{ vscode_extensions_uninstall }}"
   when: vscode_extensions_uninstall | length > 0
+
+- name: Ensure VSCode settings directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.vscode-server/data/Machine"
+    state: directory
+    mode: "0700"
+    access_time: preserve
+    modification_time: preserve
+
+- name: Write VSCode settings for WSL machine
+  ansible.builtin.template:
+    src: settings.json.j2
+    dest: "{{ ansible_user_dir }}/.vscode-server/data/Machine/settings.json"
+    force: "{{ vscode_settings_force | bool }}"
+    mode: "0600"
+
+- name: Check if project-manager directory exists
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.vscode-server/data/User/globalStorage/alefragnani.project-manager"
+  register: project_manager_dir
+
+- name: Define a list of projects which will be managed by vscode project-manager
+  ansible.builtin.template:
+    src: projects.json.j2
+    dest: "{{ ansible_user_dir }}/.vscode-server/data/User/globalStorage/alefragnani.project-manager/projects.json"
+    mode: u+rwx
+  when:
+    - project_manager_dir.stat.exists
+    - vscode_projects | length > 0

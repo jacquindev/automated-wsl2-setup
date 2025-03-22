@@ -1,6 +1,60 @@
 ---
 # defaults file for ansible-role-vscode
 
-vscode_extensions_install: []
+# Set this settings to `false` to not install 'suggested' extensions below:
+vscode_install_suggested_extensions: true
+vscode_suggested_extensions:
+  - alefragnani.project-manager
+  - bierner.github-markdown-preview
+  - donjayamanne.githistory
+  - editorconfig.editorconfig
+  - formulahendry.code-runner
+  - foxundermoon.shell-format
+  - github.vscode-github-actions
+  - github.vscode-pull-request-github
+  - timonwong.shellcheck
+  - redhat.ansible
+  - redhat.vscode-xml
+  - redhat.vscode-yaml
 
+vscode_extensions_install: []
 vscode_extensions_uninstall: []
+
+# whether or not to force new changes in vscode settings
+vscode_settings_force: false
+vscode_settings:
+  # Panel position:
+  workbench.panel.defaultLocation: "bottom" # bottom | left | right | top
+  # DEFAULT settings for VSCode Project Manager extensions
+  # - https://github.com/alefragnani/vscode-project-manager
+  # - https://marketplace.visualstudio.com/items?itemName=alefragnani.project-manager
+  projectManager.groupList: true
+  projectManager.removeCurrentProjectFromList: false
+  projectManager.checkInvalidPathsBeforeListing: true
+  projectManager.supportSymlinksOnBaseFolders: false
+  projectManager.showParentFolderInfoOnDuplicates: false
+  projectManager.filterOnFullPath: false
+  projectManager.projectsLocation: ""
+  projectManager.git.baseFolders: []
+  projectManager.git.ignoredFolders: []
+  projectManager.git.maxDepthRecursion: 4
+  projectManager.ignoreProjectsWithinProjects: false
+  projectManager.cacheProjectsBetweenSessions: true
+  projectManager.showProjectNameInStatusBar: true
+  projectManager.openInNewWindowWhenClickingInStatusBar: false
+  projectManager.openInCurrentWindowIfEmpty: "always" # always | onlyUsingCommandPalette | onlyUsingSideBar | never
+  projectManager.tags: ["Personal", "Work"]
+
+# Define a list of projects which will be managed by VSCode Project Manager extension
+vscode_projects: []
+# vscode_projects:
+#   - name: "Dotsfiles"
+#     rootPath: "~/projects/dotfiles"
+#     paths: []
+#     tags: ["Personal"]
+#     enabled: true
+#   - name: "Numbered Bookmarks"
+#     rootPath: "~/Documents/GitHub/vscode-numbered-bookmarks"
+#     paths: []
+#     tags: ["Personal", "VS Code"]
+#     enabled: false
