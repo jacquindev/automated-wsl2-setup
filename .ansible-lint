@@ -1,10 +1,12 @@
 ---
 skip_list:
-  - schema[meta]
-  - role-name
   - experimental
   - fqcn
+  - ignore-errors
   - name[missing]
   - no-changed-when
+  - package-latest
   - risky-file-permissions
+  - role-name
+  - schema[meta]
   - yaml

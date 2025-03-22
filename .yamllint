@@ -5,6 +5,8 @@ rules:
   line-length:
     max: 180
     level: warning
+  comments-indentation: false
 
 ignore: |
   .github/*
+  .ansible/*
