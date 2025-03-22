@@ -93,45 +93,51 @@ vfox_plugins: []
 #       - 22.14.0 # LTS version
 #     global: 23.9.0
 
-#   - name: java
-#     versions:
-#       - 21.0.2-graalce
-#     global: 21.0.2-graalce
+# Those are specific settings for VSCode on WSL instance only.
+# This will modify the default `settings.json` at ~/.vscode-server/data/Machine/settings.json
+vscode_settings_force: true   # set this to `false` to NOT force modify your `settings.json` file
+vscode_settings:
+  workbench.panel.defaultLocation: "bottom"
+  projectManager.tags: ["Personal", "Work", "Ansible"]
+  projectManager.git.baseFolders: ["~/projects"]
+  projectManager.supportSymlinksOnBaseFolders: true
+  projectManager.openInNewWindowWhenClickingInStatusBar: true
 
-#   - name: golang
-#     versions:
-#       - 1.24.1
-#     global: 1.24.1
-
+vscode_install_suggested_extensions: true
+# Additional extensions to installed after installing all the suggested extensions
 vscode_extensions_install:
-  - bierner.github-markdown-preview
+  - astro-build.astro-vscode
+  - bbenoist.vagrant
+  - bradlc.vscode-tailwindcss
+  - christian-kohler.npm-intellisense
   - christian-kohler.path-intellisense
   - davidanson.vscode-markdownlint
   - dbaeumer.vscode-eslint
-  - donjayamanne.githistory
   - dotjoshjohnson.xml
   - eamodio.gitlens
-  - editorconfig.editorconfig
-  - foxundermoon.shell-format
+  - esbenp.prettier-vscode
   - github.copilot
   - github.copilot-chat
-  - github.vscode-github-actions
-  - github.vscode-pull-request-github
+  - golang.go
   - hashicorp.terraform
+  - kisstkondoros.vscode-gutter-preview
+  - marlon407.code-groovy
   - mechatroner.rainbow-csv
   - ms-azuretools.vscode-docker
   - ms-python.debugpy
   - ms-python.python
   - ms-python.vscode-pylance
+  - ms-vscode.makefile-tools
+  - mtxr.sqltools
   - naumovs.color-highlight
   - oderwat.indent-rainbow
-  - redhat.ansible
-  - redhat.vscode-xml
-  - redhat.vscode-yaml
   - saeris.markdown-github-alerts
   - samuelcolvin.jinjahtml
+  - shopify.ruby-lsp
+  - steoates.autoimport
+  - streetsidesoftware.code-spell-checker
   - tamasfe.even-better-toml
-  - timonwong.shellcheck
+  - task.vscode-task
 
 docker_users:
   - "{{ ansible_user_id }}"
