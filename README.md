@@ -1,13 +1,14 @@
-# Automated Setup WSL2 Machine
+<h1><div align="center">
 
-This repository contains Ansible playbook to automatically configure WSL2 instance.
+![header](https://github.com/jacquindev/automated-wsl2-setup/blob/master/.github/assets/header.gif)
 
-> [!WARNING]
-> This is a **WORK IN PROGRESS** project. Please use with caution!! <br>
+</div></h1>
+
+<div align="center"><h4>This repository contains Ansible playbook to automatically configure a WSL2 machine.</h4></div>
+<br>
+<p align="center"><a href="https://skillicons.dev"><img alt="infrastructures" src="https://skillicons.dev/icons?i=ansible,ubuntu,debian,redhat,jenkins,vscode,docker,git"></a></p>
 
 <hr>
-
-[![infrastructures](https://skillicons.dev/icons?i=ansible,ubuntu,debian,redhat,docker,jenkins,git)](https://skillicons.dev)
 
 ## Requirements
 
@@ -61,28 +62,28 @@ git clone https://github.com/jacquindev/automated-wsl2-setup.git /your/location
 - You can do this *manually* **OR**
 - (Recommended) Run the ***[init.sh](./init.sh)*** to setup [Ansible](https://docs.ansible.com/ansible/latest/index.html) on your machine.
 
-### 4. Ensure [required Ansible roles and collections](./requirements.yml) of this playbook by using `ansible-galaxy` command:
+### 4. Ensure [required Ansible roles and collections](./requirements.yml) of this playbook by using `ansible-galaxy` command
 
 ```bash
 ansible-galaxy install -r requirements.yml
 ```
 
-### 5. Run the [main.yml](./main.yml) file to start the setup process:
+### 5. Run the [main.yml](./main.yml) file to start the setup process
 
 ```bash
-ansible-playbook --ask-become-pass main.yml
+ansible-playbook main.yml -K
 ```
 
 ## Usage
 
 ### Running a specific set of tagged tasks
 
-You can filter which part of the provisioning process to run by specifying a set of tags using ansible-playbook's --tags flag.
+You can filter which part of the provisioning process to run by specifying a set of tags using ansible-playbook's `--tags` (`-t`) flag.
 
 For example:
 
 ```bash
-ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
+ansible-playbook main.yml -K -t "dotfiles,homebrew"
 ```
 
 ### Overriding Defaults
@@ -127,7 +128,7 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
   git_email: johndoe@example.com
   ```
 
-- [Homebrew]() related settings:
+- [Homebrew](https://brew.sh/) related settings:
 
   ```yaml
   # To NOT install and setup Homebrew on your machine
@@ -193,7 +194,7 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
       global: 21.0.2-graalce
   ```
 
-- To let Ansible to install [Visual Studio Code](https://code.visualstudio.com/) extensions on your WSL2:
+- To let Ansible to install [Visual Studio Code](https://code.visualstudio.com/) extensions & configure its settings on your WSL2:
 
   ```yaml
   configure_vscode: true
@@ -201,16 +202,21 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
   vscode_install_suggested_extensions: false
 
   vscode_extensions_install:
-  - redhat.ansible
-  - redhat.vscode-yaml
-  - tamasfe.even-better-toml
+  - esbenp.prettier-vscode
+  - timonwong.shellcheck
 
   vscode_extensions_uninstall:
   - ms-azuretools.vscode-docker
 
   vscode_settings_force: true
+
   vscode_settings:
     workbench.panel.defaultLocation: "left"
+    "[javascript]":
+      editor.defaultFormatter: "esbenp.prettier-vscode"
+      editor.formatOnSave: true
+    shellcheck.enable: true
+    shellcheck.enableQuickFix: true
   ```
 
 - Please note that this supposed you already installed [Visual Studio Code](https://code.visualstudio.com/) on your Windows local machine, and have [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) installed. Also, ensure that your WSL2 instance have VSCode on `PATH`. For instance, your `/etc/wsl.conf`'s `[interop]` section label should have settings: `enabled=true` and `appendWindowsPath`. These are usually enabled by default.
