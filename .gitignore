@@ -1,2 +1,4 @@
 # exclude user config file
 config.yml
+
+.ansible
