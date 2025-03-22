@@ -4,7 +4,7 @@
 
 </div></h1>
 
-<div align="center"><h4>This repository contains Ansible playbook to automatically configure a WSL2 machine.</h4></div>
+<div align="center"><h3>This repository contains Ansible playbook to automatically configure a WSL2 machine.</h3></div>
 <br>
 <p align="center"><a href="https://skillicons.dev"><img alt="infrastructures" src="https://skillicons.dev/icons?i=ansible,ubuntu,debian,redhat,jenkins,vscode,docker,git"></a></p>
 
