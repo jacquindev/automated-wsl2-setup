@@ -198,6 +198,8 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
   ```yaml
   configure_vscode: true
 
+  vscode_install_suggested_extensions: false
+
   vscode_extensions_install:
   - redhat.ansible
   - redhat.vscode-yaml
@@ -205,6 +207,10 @@ ansible-playbook --ask-become-pass main.yml -K --tags "dotfiles,homebrew"
 
   vscode_extensions_uninstall:
   - ms-azuretools.vscode-docker
+
+  vscode_settings_force: true
+  vscode_settings:
+    workbench.panel.defaultLocation: "left"
   ```
 
 - Please note that this supposed you already installed [Visual Studio Code](https://code.visualstudio.com/) on your Windows local machine, and have [Remote Development Extension Pack](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) installed. Also, ensure that your WSL2 instance have VSCode on `PATH`. For instance, your `/etc/wsl.conf`'s `[interop]` section label should have settings: `enabled=true` and `appendWindowsPath`. These are usually enabled by default.
