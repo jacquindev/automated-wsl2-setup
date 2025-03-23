@@ -1,5 +1,4 @@
 ---
-
 - name: Check if .hushlogin file exists'
   ansible.builtin.stat:
     path: "{{ ansible_user_dir }}/.hushlogin"
@@ -23,15 +22,19 @@
     group: root
   become: true
 
-- name: Disable original resolv.conf file
+- name: Check if /etc/resolv.conf is a symlink
+  ansible.builtin.stat:
+    path: /etc/resolv.conf
+  register: symlink_check
+
+- name: Remove origin /etc/resolv.conf
   ansible.builtin.file:
     path: /etc/resolv.conf
     state: absent
-  become: true
-  when:
-    - wsl_network_generate_resolve_config is defined
-    - wsl_network_generate_resolve_config | bool | lower == 'false'
-
+  when: >
+    (symlink_check.stat.islnk) and 
+    (wsl_network_generate_resolve_config is defined) and 
+    (wsl_network_generate_resolve_config | bool | lower == 'false')
 
 - name: Fix resolved network configuration
   ansible.builtin.copy:
@@ -40,7 +43,21 @@
     owner: root
     group: root
     mode: "0644"
+    follow: true
+    backup: true
   become: true
-  when:
-    - wsl_network_generate_resolve_config is defined
-    - wsl_network_generate_resolve_config | bool | lower == 'false'
+  when: >
+    (wsl_network_generate_resolve_config is defined) and
+    (wsl_network_generate_resolve_config | bool | lower == 'false')
+
+- name: Enable passwordless sudo
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL) NOPASSWD:ALL"
+    validate: "visudo -cf %s"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
