@@ -3,6 +3,7 @@
 roles:
   - name: geerlingguy.dotfiles
   - name: geerlingguy.docker
+  - name: geerlingguy.java
   - name: geerlingguy.jenkins
 
 collections:
