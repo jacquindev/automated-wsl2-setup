@@ -7,27 +7,60 @@
     cache_valid_time: 14400
   become: true
 
-- name: Add universe repository for Ubuntu
-  ansible.builtin.apt_repository:
-    repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
-    state: present
+- name: Ensure FUSE is available on Ubuntu machine
   when: ansible_distribution == 'Ubuntu'
   become: true
+  block:
+    - name: Set FUSE package fact
+      ansible.builtin.set_fact:
+        fuse_image: "{{ 'libfuse2t64' if (ansible_distribution_major_version | int >= 24) else 'libfuse2' }}"
 
-- name: Ensure FUSE installed on Ubuntu machine
-  ansible.builtin.apt:
-    name: "{{ 'libfuse2t64' if (ansible_distribution_major_version | int >= 24) else 'libfuse2' }}"
-    state: present
-    update_cache: true
-  when: ansible_distribution == 'Ubuntu'
-  become: true
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: auto
 
-- name: Avoid duplicate Universe repository
-  ansible.builtin.apt_repository:
-    repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
-    state: absent
-  when: ansible_distribution == 'Ubuntu'
-  become: true
+    - name: Ensure universe repository exists
+      ansible.builtin.command: add-apt-repository universe --yes --update
+      when: fuse_image not in ansible_facts.packages
+      check_mode: false
+      changed_when: false
+      ignore_errors: "{{ ansible_check_mode }}"
+
+    - name: Ensure FUSE is installed on the machine
+      ansible.builtin.apt:
+        name: "{{ fuse_image }}"
+        state: present
+        update_cache: true
+      when: fuse_image not in ansible_facts.packages
+
+    - name: Ensure fuse is installed (Ubuntu <= 21.10)
+      ansible.builtin.apt:
+        name: fuse
+        state: present
+        force_apt_get: true
+      when: ansible_distribution_major_version <= '21.10'
+
+    - name: Load fuse module (Ubuntu <= 21.10)
+      community.general.modprobe:
+        name: fuse
+        state: present
+      when: ansible_distribution_major_version <= '21.10'
+
+    - name: Ensure fuse group exists (Ubuntu <= 21.10)
+      ansible.builtin.group:
+        name: fuse
+        state: present
+      when: ansible_distribution_major_version <= '21.10'
+
+    - name: Add fuse group to current user
+      ansible.builtin.user:
+        name: "{{ ansible_user_id }}"
+        state: present
+        append: true
+        groups:
+          - fuse
+      become_user: "{{ ansible_user_id }}"
+      when: ansible_distribution_major_version <= '21.10'
 
 - name: Ensure git is installed
   ansible.builtin.apt:
