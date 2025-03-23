@@ -22,3 +22,25 @@
     owner: root
     group: root
   become: true
+
+- name: Disable original resolv.conf file
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
+  become: true
+  when:
+    - wsl_network_generate_resolve_config is defined
+    - wsl_network_generate_resolve_config | bool | lower == 'false'
+
+
+- name: Fix resolved network configuration
+  ansible.builtin.copy:
+    dest: /etc/resolv.conf
+    content: "nameserver 1.1.1.1"
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  when:
+    - wsl_network_generate_resolve_config is defined
+    - wsl_network_generate_resolve_config | bool | lower == 'false'
