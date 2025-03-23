@@ -1,6 +1,6 @@
 ---
 
-- name: Setup WSL2 machine (Debian / Ubuntu / CentOS)
+- name: Setup WSL2 machine (Debian / Ubuntu / CentOS).
   hosts: all
 
   vars_files:
@@ -43,7 +43,39 @@
       become: true
       tags: ["docker"]
 
-    - role: geerlingguy.jenkins
-      when: configure_jenkins
+- name: Setup Jenkins on WSL2 instance.
+  hosts: all
+
+  vars_files:
+    - vars/default.config.yml
+
+  pre_tasks:
+    - name: Include playbook configuration
+      ansible.builtin.include_vars: "{{ item }}"
+      with_fileglob:
+        - "{{ playbook_dir }}/config.yml"
+      tags: ["always"]
+
+  roles:
+    - role: geerlingguy.java
       become: true
+      java_packages:
+        - java-17-openjdk
+      when:
+        - configure_jenkins
+        - ansible_os_family == 'RedHat'
+      tags: ["java"]
+
+    - role: geerlingguy.java
+      become: true
+      java_packages:
+        - openjdk-17-jdk
+      when:
+        - configure_jenkins
+        - ansible_os_family == 'Debian'
+      tags: ["java"]
+
+    - role: geerlingguy.jenkins
+      become: true
+      when: configure_jenkins
       tags: ["jenkins"]
