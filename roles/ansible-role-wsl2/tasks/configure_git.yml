@@ -55,9 +55,13 @@
   become_user: "{{ ansible_user_id }}"
   register: ssh_key_pair
 
-- name: Print SSH public key
+- name: Retrieve SSH public key content
   ansible.builtin.command: "cat {{ ansible_user_dir }}/.ssh/id_ed25519.pub"
   when: (ssh_key_pair.changed) or (ssh_key_pair is succeeded)
   register: ssh_pub_key_result
   become: true
   become_user: "{{ ansible_user_id }}"
+
+- name: Print SSH public key
+  ansible.builtin.debug:
+    var: ssh_pub_key_result.stdout
