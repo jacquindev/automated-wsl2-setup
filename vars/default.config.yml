@@ -71,6 +71,30 @@ homebrew_brewfile_dir: "{{ playbook_dir }}"
 git_username: Jacquin Moon
 git_email: jacquindev@outlook.com
 
+git_settings:
+  - name: am.threeWay
+    value: true
+  - name: help.autocorrect
+    value: 1
+  - name: rerere.enabled
+    value: true
+  - name: rerere.autoUpdate
+    value: true
+  - name: core.branch
+    value: auto
+  - name: core.longpaths
+    value: true
+  - name: core.showBranch
+    value: auto
+  - name: log.abbrevCommit
+    value: true
+  - name: log.decorate
+    value: short
+  - name: gpg.format
+    value: ssh
+  - name: user.signingkey
+    value: ~/.ssh/id_ed25519.pub
+
 dotfiles_repo: https://github.com/jacquindev/dotfiles.git
 dotfiles_repo_version: master
 dotfiles_repo_accept_hostkey: true
