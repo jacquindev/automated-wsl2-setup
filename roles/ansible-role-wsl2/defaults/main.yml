@@ -61,3 +61,7 @@ git_settings: []
 #     value: true
 #   - name: rerere.autoUpdate
 #     value: true
+
+git_paths: []
+# git_paths:
+#   - ~/.config/delta/themes/themes.gitconfig

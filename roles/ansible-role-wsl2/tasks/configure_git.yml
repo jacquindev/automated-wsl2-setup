@@ -24,6 +24,15 @@
   with_items: "{{ git_settings }}"
   when: git_settings | length > 0
 
+- name: Include specific paths to .gitconfig
+  community.general.git_config:
+    name: include.path
+    value: "{{ item }}"
+    add_mode: add
+    scope: global
+  loop: "{{ git_include_paths }}"
+  when: git_include_paths | length > 0
+
 - name: Setup git credential helper fact
   ansible.builtin.set_fact:
     git_credential_helper: "{{ __git_credential_helper }}"

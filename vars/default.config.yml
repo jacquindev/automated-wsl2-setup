@@ -95,6 +95,8 @@ git_settings:
   - name: user.signingkey
     value: ~/.ssh/id_ed25519.pub
 
+git_include_paths: []
+
 dotfiles_repo: https://github.com/jacquindev/dotfiles.git
 dotfiles_repo_version: master
 dotfiles_repo_accept_hostkey: true
